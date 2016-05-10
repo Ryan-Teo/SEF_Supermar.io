@@ -56,5 +56,18 @@ public class ReportTest {
 		rep.salesReport(trans, date1, date2);
 		assertEquals(rep.getReport().size(),5,0);		
 	}
+	
+	@Test
+	public void test3() throws Exception {
+		String date1="01/01/2016",date2="05/01/2016";
+		rep.salesReport(trans, date1, date2);
+		assertEquals(rep.getReport().size(),4,0);		
+	}
+	
+	@Test(expected=InvalidDateException.class)
+	public void testdate() throws Exception {
+		String date1="ww/01/2016",date2="05/01/2016";
+		rep.salesReport(trans, date1, date2);	
+	}
 
 }
