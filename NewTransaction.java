@@ -231,4 +231,60 @@ public class NewTransaction
 		
 		return total;			
 	}
-}
+	private void overrideTransaction(ArrayList<SaleLineItem> trans,SaleStaff staff, Scanner sc)
+	{
+		Boolean valid = false;
+			//Verification step
+		do{
+			if( valid == false )
+			{
+				System.out.println("Please enter Staff ID : ");
+				String id = sc.nextLine();
+				System.out.println("Please enter Password : ");
+				String password = sc.nextLine();
+			}
+			
+			if(staff.geteId().equals(id) && staff.getePassword.equals(password))
+			{
+				valid = true;
+				System.out.println("Specify order item name to be overriden : ");
+				String name = sc.nextLine();
+				System.out.println("Specify new amount of quantity : ");
+				Double quantity = Double.parseDouble(sc.nextLine());
+				
+				for(int i = 0; i<trans.size() ;i++)
+				{
+					if(name.equals(trans.get(i).getOpName()))
+					{
+						if(quantity > 0)
+						{
+							//Overriding quantityOrdered
+							trans.get(i).setQtyOrdered(quantity);
+							System.out.println("Overriding transaction successful")
+							break;
+						}
+						else if (quantity == 0)
+						{
+							//Remove orderLine from the transaction
+							trans.remove(trans.get(i));
+							System.out.println("Order item is removed.")
+							break;
+						}
+					}
+					else
+					{
+						System.out.println("Order item not found.")
+						break;
+					}
+				}
+			}
+			else if( id.equals("quit") )
+			{
+				break;
+			}
+			else
+			{
+				System.out.println(" Invalid ID or Password, please try again ")
+			}
+		}while(1>0);
+	}
