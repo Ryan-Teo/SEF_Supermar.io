@@ -9,6 +9,7 @@ public class FuncData
 	private Employees emp = new Employees();
 	private Customers cus = new Customers();
 	private Transactions trans = new Transactions();
+	private Orders ord = new Orders();
 	
 	/*
 	 * to save all data 
@@ -23,6 +24,7 @@ public class FuncData
 			emp.saveEmployees();
 			cus.saveCustomers();
 			trans.saveTransactions();
+			ord.saveOrders();
 		}		
 		catch (IOException ioe)	{}		
 	}
@@ -40,13 +42,14 @@ public class FuncData
 			emp.loadEmployees();
 			cus.loadCustomers();
 			trans.loadTransactions();
+			ord.loadOrders();
 		}
 		catch (Exception e)	{}	
 	}
 	
 	/*
 	 * to reset all data
-	 * (not including transactions)
+	 * (not including transactions & orders)
 	 *
 	 * STEPS:
 	 * 1. clear array
@@ -71,7 +74,7 @@ public class FuncData
 			
 			Customers.customers.clear();
 			cus.customerStartUp();
-			cus.saveCustomers();			
+			cus.saveCustomers();		
 		}
 		catch (Exception e) {}
 	}
