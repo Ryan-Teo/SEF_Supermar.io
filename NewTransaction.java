@@ -288,3 +288,30 @@ public class NewTransaction
 			}
 		}while(1>0);
 	}
+	
+	private void cancelTransaction(ArrayList<SaleLineItem> trans,SaleStaff staff, Scanner sc)
+	{
+			
+		System.out.println("Please enter Staff ID : ");
+		String id = sc.nextLine();
+		System.out.println("Please enter Password : ");
+		String password = sc.nextLine();
+
+			if(staff.geteId().equals(id) && staff.getePassword.equals(password))
+			{
+				System.out.println("Cancel the whole transaction?(yes/no)");
+				String input = sc.nextLine();
+				
+				if(input.equals("yes")
+				{
+					for(int i = 0; i<trans.size() ;i++)
+					{
+						trans.remove(i);
+					}
+				}
+				else
+				{
+					System.out.println("Canceling transaction is aborted");
+				}
+			}
+	}
