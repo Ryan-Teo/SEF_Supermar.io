@@ -1,8 +1,8 @@
 package order;
 
 public class Order {
-	String opID, opName, date;
-	double qtyOrdered;
+	private String opID, opName, date;
+	private double qtyOrdered;
 	
 	public Order(String opID, String opName, double qtyOrdered, String date){
 		this.opID=opID;
