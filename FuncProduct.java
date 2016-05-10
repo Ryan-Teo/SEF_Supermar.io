@@ -82,4 +82,159 @@ public class FuncProduct {
 		System.out.println();
 		Helpers.pause(sc);
 	 }	
+	
+	public void addNewProduct(Scanner sc)
+	{
+		String pID, pName, sID, location, type;
+		int stockLvl, replenishLvl, reorderQty, bulkQty;
+		double unitPrice, pStockLvl,pReplenishLvl, pReorderQty, pBulkQty, bulkDis, disPrice;
+				
+		// product ID
+		System.out.print("Please enter new Product I.D: ");
+		pID = sc.nextLine();
+		
+		// product name
+		System.out.print("Enter Product's name: ");
+		pName = sc.nextLine();
+		
+		// type of product
+		System.out.print("Enter type of product ('p' for perishable & 'n' for non-perishable): ");
+		type = sc.nextLine();
+		
+		// for perishable product
+		if (type.equals("p"))
+		{
+			// unit price
+			System.out.print("Enter price per kg: ");
+			unitPrice = Double.parseDouble(sc.nextLine());
+			
+			// stock level
+			System.out.print("Enter stock level (kg): ");
+			pStockLvl = Double.parseDouble(sc.nextLine());
+			
+			// replenish level
+			System.out.print("Enter minimum automatic replenish level (kg): ");
+			pReplenishLvl = Double.parseDouble(sc.nextLine());
+			
+			// reorder quantity
+			System.out.print("Enter automatic reorder quantity (kg): ");
+			pReorderQty = Double.parseDouble(sc.nextLine());
+			
+			// supplier
+			System.out.print("Enter Supplier I.D.: ");
+			sID = sc.nextLine();
+			
+			// location
+			System.out.print("Enter shelf location: ");
+			location = sc.nextLine();
+			
+			// bulk quantity
+			System.out.print("Enter minimum bulk quantity (kg) for discount: ");
+			pBulkQty = Double.parseDouble(sc.nextLine());
+			
+			// bulk discount
+			System.out.print("Enter bulk quantity discount (eg. 0.2 for 20%): ");
+			bulkDis = Double.parseDouble(sc.nextLine());
+			
+			// promotional discount price
+			System.out.print("Enter promotional sale price if applicable, else enter original price: ");
+			disPrice = Double.parseDouble(sc.nextLine());
+			
+			// add product to the arraylist
+			Products.products.add(pProduct(pID, pName, unitPrice, pStockLvl, pReplenishLvl, pReorderQty,
+											sID, location, pBulkQty, bulkDis, disPrice));
+			System.out.println("Product added successfully!");
+		}
+		
+		// for non-perishable product
+		else if (type.equals("n"))
+		{
+			// unit price
+			System.out.print("Enter price per item: ");
+			unitPrice = Double.parseDouble(sc.nextLine());
+			
+			// stock level
+			System.out.print("Enter stock level (item): ");
+			stockLvl = Integer.parseInt(sc.nextLine());
+			
+			// replenish level
+			System.out.print("Enter minimum automatic replenish level (item): ");
+			replenishLvl = Integer.parseInt(sc.nextLine());
+			
+			// reorder quantity
+			System.out.print("Enter automatic reorder quantity (item): ");
+			reorderQty = Integer.parseInt(sc.nextLine());
+			
+			// supplier
+			System.out.print("Enter Supplier I.D.: ");
+			sID = sc.nextLine();
+			
+			// location
+			System.out.print("Enter shelf location: ");
+			location = sc.nextLine();
+			
+			// bulk quantity
+			System.out.print("Enter minimum bulk quantity (item) for discount: ");
+			bulkQty = Integer.parseInt(sc.nextLine());
+			
+			// bulk discount
+			System.out.print("Enter bulk quantity discount (eg. 0.2 for 20%): ");
+			bulkDis = Double.parseDouble(sc.nextLine());
+			
+			// promotional discount price
+			System.out.print("Enter promotional sale price if applicable, else enter original price: ");
+			disPrice = Double.parseDouble(sc.nextLine());
+			
+			// add product to the arraylist
+			Products.products.add(npProduct(pID, pName, unitPrice, stockLvl, replenishLvl, reorderQty,
+											sID, location, bulkQty, bulkDis, disPrice));
+			System.out.println("Product added successfully!");
+		}			
+	}
+	
+	public void editCurrentItem(Scanner sc)
+	{		
+		Product prod = null;
+		int check = 0;
+		String choice;
+		
+		do{
+			try {
+				System.out.print("Please enter product ID/Name: ");
+				prod = getProduct(sc.nextLine());
+				check = 1;
+			} catch (NotFoundException e) {
+				e.printErrorMessage();
+			}
+		}while(check == 0);
+		
+		prod.addItemInfo();
+		
+		System.out.println("1. to edit bulk info");
+		System.out.println("2. to edit promotional sale price");
+		System.out.print("Please enter your choice: ");
+		choice = sc.nextLine();
+		
+		if(choice.equals("1"))
+		{
+			System.out.print("Enter the new minimum bulk quantity for discount: ");
+			if(prod instanceof pProduct)
+				prod.setBulkQty(Double.parseDouble(sc.nextLine()));
+			else if(prod instanceof npProduct)
+				prod.setBulkQty(Integer.parseInt(sc.nextLine()));
+			
+			System.out.print("Enter the new bulk quantity discount (eg. 0.2 for 20%): ");
+			prod.setBulkDis(Double.parseDouble(sc.nextLine()));
+			
+			System.out.println("Bulk info editted successfully!");
+		}
+		
+		else if(choice.equals("2"))
+		{
+			System.out.print("Enter the new promotional sale price: ");
+			prod.setDisPrice(Double.parseDouble(sc.nextLine()));
+			
+			System.out.println("Promotional sale price editted successfully!");
+		}
+	}
 }
