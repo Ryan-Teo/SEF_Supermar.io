@@ -3,15 +3,19 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import exceptions.InvalidDateException;
-import product.FuncProduct;
-import product.Product;
+import product.*;
 import sale.*;
 
-public class Report {	
+public class Report {
+	ArrayList<ReportItem> report = new ArrayList<ReportItem>();
+	
+	public ArrayList<ReportItem> getReport() {
+		return report;
+	}
+
 	public void salesReport(ArrayList<SaleLineItem> trans, String date1, String date2) throws Exception{
 		double totalPrice=0;
 		FuncProduct fProd=new FuncProduct();
-		ArrayList<ReportItem> report = new ArrayList<ReportItem>();
 		//Adding relevant products in transaction, in between dates provided
 		for (int i=0; i<trans.size(); i++){	
 			SaleLineItem transaction = trans.get(i);
@@ -25,11 +29,11 @@ public class Report {
 					if(report.get(j).getProd()==prod){
 						report.get(j).addQty(qty);
 						report.get(j).addRevenue(revenue);
-						totalPrice+=revenue;
 						break;
 					}
 				}
 				report.add(new ReportItem(prod,qty,revenue));
+				totalPrice+=revenue;
 			}
 		}
 		int idLen=10,nameLen=4,uPriceLen=10,qtyLen=8,revLen=7;
@@ -68,7 +72,7 @@ public class Report {
 		System.out.print("Sales Report");
 		printDash((int)lineSale/2);
 		System.out.println();
-		System.out.printf("| %*s | %*s | %*s | %*s | %*s |", idLen,"Product ID", nameLen,"Name", uPriceLen,"Unit Price", qtyLen,"Qty Sold", revLen,"Revenue");
+		System.out.printf("| %"+idLen+"s | %"+nameLen+"s | %"+uPriceLen+"s | %"+qtyLen+"s | %"+revLen+"s |\n", "Product ID","Name", "Unit Price","Qty Sold","Revenue");
 		for(int i=0; i<report.size(); i++){
 			Product prod = report.get(i).getProd();
 			String pID=prod.getpID();
@@ -76,11 +80,12 @@ public class Report {
 			double price=prod.getUnitPrice();
 			double qtySold=report.get(i).getQty();
 			double rev=report.get(i).getRevenue();
-			System.out.printf("| %*s | %*s | %*f.2 | %*f.2 | %*f.2 |", idLen,pID, nameLen,pName, uPriceLen,price, qtyLen,qtySold, revLen,rev);
+			System.out.printf("| %"+idLen+"s | %"+nameLen+"s | %"+uPriceLen+"s | %"+qtyLen+"s | %"+revLen+"s |\n", pID, pName, price,qtySold,rev);
 		}
-		int totalLine=line-5-String.valueOf(totalPrice).length();
-		System.out.printf("| $%*d |", totalLine,totalPrice);
-		printDash(line);		
+		int totalLine=line-15-String.valueOf(totalPrice).length();
+		System.out.printf("| Total Price: %"+totalLine+"s |\n","$"+totalPrice);
+		printDash(line);
+		System.out.println();
 	}
 	
 	public void supplyReport(){
@@ -123,5 +128,14 @@ public class Report {
 			return date;
 		}
 	}
+	
+	/*private boolean exists(ArrayList<ReportItem> report ,Product prod){
+		for(int i=0;i<report.size();i++){
+			if(report.get(i).getProd()==prod){
+				return true;
+			}
+		}
+		return false;
+	}*/
 	
 }
