@@ -31,4 +31,7 @@ public class SaleLineItem {
 	public String getDate() {
 		return date;
 	}
+	public void setQty(Double qty){
+		this.qty = qty;
+	}
 }
