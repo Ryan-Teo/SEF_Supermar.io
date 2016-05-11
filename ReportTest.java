@@ -35,7 +35,9 @@ public class ReportTest {
 		trans.add(new SaleLineItem("flour", 2.0, 5.0, "02/01/2016", "t004"));
 		trans.add(new SaleLineItem("chocolate", 10.0, 65.0, "03/01/2016", "t005"));
 		trans.add(new SaleLineItem("grapes", 3.0, 13.5, "04/01/2016", "t006"));
-		trans.add(new SaleLineItem("banana", 4.0, 18.0, "05/01/2016", "t007"));
+		trans.add(new SaleLineItem("banana", 4.0, 18.0, "04/01/2016", "t007"));
+		trans.add(new SaleLineItem("grapes", 4.0, 18.0, "04/01/2016", "t008"));
+		trans.add(new SaleLineItem("banana", 4.0, 18.0, "05/01/2016", "t009"));
 	}
 
 	@After
@@ -44,18 +46,18 @@ public class ReportTest {
 	}
 
 	@Test
-	public void testAdd() {
-		trans.add(new SaleLineItem("chocolate", 10.0, 65.0, "07/01/2016", "t008"));
-		trans.add(new SaleLineItem("grapes", 3.0, 13.5, "08/01/2016", "t009"));
-		trans.add(new SaleLineItem("banana", 4.0, 18.0, "09/01/2016", "t010"));
-		assertEquals(trans.size(),10,0);
+	public void test1() {
+		trans.add(new SaleLineItem("chocolate", 10.0, 65.0, "07/01/2016", "t010"));
+		trans.add(new SaleLineItem("grapes", 3.0, 13.5, "08/01/2016", "t011"));
+		trans.add(new SaleLineItem("banana", 4.0, 18.0, "09/01/2016", "t012"));
+		assertEquals(trans.size(),12,0);
 	}
 	
 	@Test
 	public void test2() throws Exception {
 		String date1="01/01/2016",date2="03/01/2016";
 		rep.salesReport(trans, date1, date2);
-		assertEquals(rep.getReport().size(),5,0);		
+		assertEquals(rep.getReport().size(),2,0);		
 	}
 	
 	@Test
@@ -70,5 +72,5 @@ public class ReportTest {
 		String date1="ww/01/2016",date2="05/01/2016";
 		rep.salesReport(trans, date1, date2);	
 	}
-
+	
 }
