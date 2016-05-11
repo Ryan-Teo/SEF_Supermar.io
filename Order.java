@@ -34,8 +34,4 @@ public class Order {
 	public double getQtyOrdered() {
 		return qtyOrdered;
 	}
-	
-	public void setQtyOrdered(Double qty){
-		this.qtyOrdered = qty;
-	}
 }
