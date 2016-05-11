@@ -231,87 +231,60 @@ public class NewTransaction
 		
 		return total;			
 	}
-	private void overrideTransaction(ArrayList<SaleLineItem> trans,SaleStaff staff, Scanner sc)
+	
+	private void overrideTransaction(ArrayList<SaleLineItem> trans,Employee staff, Scanner sc)
 	{
-		Boolean valid = false;
-			//Verification step
-		do{
-			if( valid == false )
+		//Verification step
+		staff = employeeLogin(sc);
+	
+		System.out.println("Specify order item name to be overriden : ");
+		String name = sc.nextLine();
+		System.out.println("Specify new amount of quantity : ");
+		Double quantity = Double.parseDouble(sc.nextLine());
+		
+		for(int i = 0; i<trans.size() ;i++)
+		{
+			if(name.equals(trans.get(i).getPname()))
 			{
-				System.out.println("Please enter Staff ID : ");
-				String id = sc.nextLine();
-				System.out.println("Please enter Password : ");
-				String password = sc.nextLine();
-			}
-			
-			if(staff.geteId().equals(id) && staff.getePassword.equals(password))
-			{
-				valid = true;
-				System.out.println("Specify order item name to be overriden : ");
-				String name = sc.nextLine();
-				System.out.println("Specify new amount of quantity : ");
-				Double quantity = Double.parseDouble(sc.nextLine());
-				
-				for(int i = 0; i<trans.size() ;i++)
+				if(quantity > 0)
 				{
-					if(name.equals(trans.get(i).getOpName()))
-					{
-						if(quantity > 0)
-						{
-							//Overriding quantityOrdered
-							trans.get(i).setQtyOrdered(quantity);
-							System.out.println("Overriding transaction successful")
-							break;
-						}
-						else if (quantity == 0)
-						{
-							//Remove orderLine from the transaction
-							trans.remove(trans.get(i));
-							System.out.println("Order item is removed.")
-							break;
-						}
-					}
-					else
-					{
-						System.out.println("Order item not found.")
-						break;
-					}
+					//Overriding quantityOrdered
+					trans.get(i).setQtyOrdered(quantity);
+					System.out.println("Overriding transaction successful")
+					break;
 				}
-			}
-			else if( id.equals("quit") )
-			{
-				break;
+				else if (quantity == 0)
+				{
+					//Remove orderLine from the transaction
+					trans.remove(trans.get(i));
+					System.out.println("Order item is removed.")
+					break;
+				}
 			}
 			else
 			{
-				System.out.println(" Invalid ID or Password, please try again ")
+				System.out.println("Order item not found.")
+				break;
 			}
-		}while(1>0);
+		}
 	}
 	
-	private void cancelTransaction(ArrayList<SaleLineItem> trans,SaleStaff staff, Scanner sc)
+	private void cancelTransaction(ArrayList<SaleLineItem> trans,Employee staff, Scanner sc)
 	{
-			
-		System.out.println("Please enter Staff ID : ");
-		String id = sc.nextLine();
-		System.out.println("Please enter Password : ");
-		String password = sc.nextLine();
-
-			if(staff.geteId().equals(id) && staff.getePassword.equals(password))
+		staff = employeeLogin(sc);
+	
+		System.out.println("Cancel the whole transaction?(yes/no)");
+		String input = sc.nextLine();
+		
+		if(input.equals("yes")
+		{
+			for(int i = 0; i<trans.size() ;i++)
 			{
-				System.out.println("Cancel the whole transaction?(yes/no)");
-				String input = sc.nextLine();
-				
-				if(input.equals("yes")
-				{
-					for(int i = 0; i<trans.size() ;i++)
-					{
-						trans.remove(i);
-					}
-				}
-				else
-				{
-					System.out.println("Canceling transaction is aborted");
-				}
+				trans.remove(i);
 			}
+		}
+		else
+		{
+			System.out.println("Canceling transaction is aborted");
+		}
 	}
