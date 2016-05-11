@@ -105,9 +105,16 @@ public class Report {
 	
 	//Date Check
 	public boolean checkDate(Date date, String date1, String date2) throws Exception{//Check if dates are in between 2 other dates
-		Date min = setDate(date1), max=setDate(date2); 
-		return date.after(min) && date.before(max);
+		Date min = setDate(date1), max=setDate(date2);
+		if (min.compareTo(date)<=0 && max.compareTo(date)>=0)
+			{
+				return true;
+			}
+		return false;
 	}
+	
+			
+	
 	
 	public boolean checkDateFormat(String date) throws Exception{//Check if date format entered is correct
 		if (date.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})"))
@@ -139,15 +146,3 @@ public class Report {
 	}*/
 	
 }
-
-
-
-
-
-
-if ( (startDate.compareTo(date)<=0 && endDate.compareTo(date)>=0) 
-				&& (ID.equals(trans.getPartID()) || (ID.equals(trans.getCustomerID()))) )
-			{
-				sale += trans.getQuantitySupplied();
-				value += trans.getTransactionValue();
-			}			
