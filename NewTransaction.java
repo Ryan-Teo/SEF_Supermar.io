@@ -235,7 +235,8 @@ public class NewTransaction
 	private void overrideTransaction(ArrayList<SaleLineItem> trans,Employee staff, Scanner sc)
 	{
 		//Verification step
-		staff = employeeLogin(sc);
+		LogIn login  = new LogIn();
+		staff = login.employeeLogin(sc);
 	
 		System.out.println("Specify order item name to be overriden : ");
 		String name = sc.nextLine();
@@ -244,26 +245,26 @@ public class NewTransaction
 		
 		for(int i = 0; i<trans.size() ;i++)
 		{
-			if(name.equals(trans.get(i).getPname()))
+			if(name.equals(trans.get(i).getIpName()))
 			{
 				if(quantity > 0)
 				{
 					//Overriding quantityOrdered
-					trans.get(i).setQtyOrdered(quantity);
-					System.out.println("Overriding transaction successful")
+					((SaleLineItem) trans.get(i)).setQty(quantity);
+					System.out.println("Overriding transaction successful");
 					break;
 				}
 				else if (quantity == 0)
 				{
 					//Remove orderLine from the transaction
 					trans.remove(trans.get(i));
-					System.out.println("Order item is removed.")
+					System.out.println("Order item is removed.");
 					break;
 				}
 			}
 			else
 			{
-				System.out.println("Order item not found.")
+				System.out.println("Order item not found.");
 				break;
 			}
 		}
@@ -271,12 +272,14 @@ public class NewTransaction
 	
 	private void cancelTransaction(ArrayList<SaleLineItem> trans,Employee staff, Scanner sc)
 	{
-		staff = employeeLogin(sc);
+		LogIn login  = new LogIn();
+		
+		staff = login.employeeLogin(sc);
 	
 		System.out.println("Cancel the whole transaction?(yes/no)");
 		String input = sc.nextLine();
 		
-		if(input.equals("yes")
+		if(input.equals("yes"))
 		{
 			for(int i = 0; i<trans.size() ;i++)
 			{
@@ -288,3 +291,6 @@ public class NewTransaction
 			System.out.println("Canceling transaction is aborted");
 		}
 	}
+
+}
+}
