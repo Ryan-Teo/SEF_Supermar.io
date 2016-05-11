@@ -139,3 +139,15 @@ public class Report {
 	}*/
 	
 }
+
+
+
+
+
+
+if ( (startDate.compareTo(date)<=0 && endDate.compareTo(date)>=0) 
+				&& (ID.equals(trans.getPartID()) || (ID.equals(trans.getCustomerID()))) )
+			{
+				sale += trans.getQuantitySupplied();
+				value += trans.getTransactionValue();
+			}			
