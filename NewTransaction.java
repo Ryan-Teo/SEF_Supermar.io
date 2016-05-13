@@ -135,9 +135,20 @@ public class NewTransaction
 			
 		// ask for assistance
 		case "4":
-			System.out.println("Function not implemented yet...");
-			break;
-			
+		LogIn login  = new LogIn();
+		
+		Employee staff = login.employeeLogin(sc);
+		System.out.println("'o' to override transaction");
+		System.out.println("'c' to cancel transaction");
+		String line  = sc.nextLine();
+		
+		if(line.equals("o")){
+			overrideTransaction(trans,staff,sc);
+		}
+		else if(line.equals("c")){
+			cancelTransaction(trans,staff, sc);
+		}
+		break;
 		default:
 			System.out.print("Invalid Choice, please re-enter:");
 		}
@@ -231,65 +242,65 @@ public class NewTransaction
 		
 		return total;			
 	}
-	
 	private void overrideTransaction(ArrayList<SaleLineItem> trans,Employee staff, Scanner sc)
 	{
-		//Verification step
-		LogIn login  = new LogIn();
-		staff = login.employeeLogin(sc);
-	
-		System.out.println("Specify order item name to be overriden : ");
-		String name = sc.nextLine();
-		System.out.println("Specify new amount of quantity : ");
-		Double quantity = Double.parseDouble(sc.nextLine());
 		
-		for(int i = 0; i<trans.size() ;i++)
-		{
-			if(name.equals(trans.get(i).getIpName()))
-			{
-				if(quantity > 0)
-				{
-					//Overriding quantityOrdered
-					((SaleLineItem) trans.get(i)).setQty(quantity);
-					System.out.println("Overriding transaction successful");
-					break;
-				}
-				else if (quantity == 0)
-				{
-					//Remove orderLine from the transaction
-					trans.remove(trans.get(i));
-					System.out.println("Order item is removed.");
-					break;
-				}
-			}
-			else
-			{
-				System.out.println("Order item not found.");
-				break;
-			}
-		}
-	}
-	
-	private void cancelTransaction(ArrayList<SaleLineItem> trans,Employee staff, Scanner sc)
-	{
-		LogIn login  = new LogIn();
-		
-		staff = login.employeeLogin(sc);
-	
-		System.out.println("Cancel the whole transaction?(yes/no)");
-		String input = sc.nextLine();
-		
-		if(input.equals("yes"))
-		{
+		String input;
+		do{
+			
+			System.out.println("Specify order item name to be overriden : ");
+			String name = sc.nextLine();
+			System.out.println("Specify new amount of quantity : ");
+			Double quantity = Double.parseDouble(sc.nextLine());
+			
 			for(int i = 0; i<trans.size() ;i++)
 			{
-				trans.remove(i);
+				if(name.equals(trans.get(i).getIpName()))
+				{
+					if(quantity > 0)
+					{
+						//Overriding quantityOrdered
+						((SaleLineItem) trans.get(i)).setQty(quantity);
+						System.out.println("Overriding transaction successful");
+						System.out.println("New Quantity : "+ ((SaleLineItem) trans.get(i)).getQty());
+						break;
+					}
+					else if (quantity == 0)
+					{
+						//Remove orderLine from the transaction
+						trans.remove(trans.get(i));
+						System.out.println("Order item is removed.");
+						break;
+					}
+				}
+				else
+				{
+					System.out.println("Order item not found.");
+					break;
+				}
 			}
-		}
-		else
+			System.out.println("Is there anything else to override? (yes/no) ");
+			input  = sc.nextLine();
+			
+		}while(!input.equals("no"));
+	}
+
+private void cancelTransaction(ArrayList<SaleLineItem> trans,Employee staff, Scanner sc)
+{
+	System.out.println("Cancel the whole transaction?(yes/no)");
+	String input = sc.nextLine();
+	
+	if(input.equals("yes"))
+	{
+		for(int i = 0; i<trans.size() ;i++)
 		{
-			System.out.println("Canceling transaction is aborted");
+			trans.remove(i);
 		}
+	}
+	else
+	{
+		System.out.println("Canceling transaction is aborted");
+	}
 	}
 
 }
