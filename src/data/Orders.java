@@ -16,9 +16,9 @@ public class Orders {
 	/*
 	 * to create a dynamic array that can grow as needed
 	 */
-	public static ArrayList<Order> orders = new ArrayList<Order>();
+	private ArrayList<Order> orders = new ArrayList<Order>();
 	
-	public static ArrayList<Order> getOrders() {
+	public ArrayList<Order> getOrders() {
 		return orders;
 	}
 

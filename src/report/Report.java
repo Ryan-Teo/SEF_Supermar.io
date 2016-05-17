@@ -10,6 +10,7 @@ import sale.*;
 
 public class Report {
 	private ArrayList<ReportItem> SalesReport = new ArrayList<ReportItem>();
+	private Orders ord = new Orders();
 	
 	public ArrayList<ReportItem> getSalesReport() {
 		return SalesReport;
@@ -91,12 +92,40 @@ public class Report {
 	}
 	
 	public void supplyReport(){
-		for(int i=0;i<Orders.orders.size();i++){
-			
-			
+		Order order;
+		int idLen=8,nameLen=12,qtyLen=11,dateLen=12;
+		for(int i=0; i<ord.getOrders().size(); i++){
+			order=ord.getOrders().get(i);
+			/*ID*/
+	    	if(order.getOpID().length() > idLen){
+	    		idLen=order.getOpID().length() ;
+	    	}
+	    	/*Name*/
+	    	if(order.getOpName().length() > nameLen){
+	    		nameLen=order.getOpName().length();
+	    	}
+	    	/*Qty*/
+	    	if(String.valueOf(order.getQtyOrdered()).length() > qtyLen){
+	    		qtyLen=String.valueOf(order.getQtyOrdered()).length();
+	    	}
+	    	/*Date*/
+	    	if(order.getDate().length() > dateLen){
+	    		dateLen=order.getDate().length();
+	    	}
 		}
-		Order(String opID, String opName, double qtyOrdered, String date)
+		int line=13+idLen+nameLen+qtyLen+dateLen;
+		int lineSupply=line-"Supply Report".length();
 		
+		printDash((int)lineSupply/2);
+		System.out.print("Supply Report");
+		printDash((int)lineSupply/2);
+		System.out.println();
+		for(int i=0;i<ord.getOrders().size();i++){
+			order=ord.getOrders().get(i);
+			System.out.printf("| %"+idLen+"s | %"+nameLen+"s | %"+qtyLen+"s | %"+dateLen+"s |\n", order.getOpID(),order.getOpName(),order.getQtyOrdered(),order.getDate());
+		}
+		printDash(line);
+		System.out.println();
 	}
 	
 	public void topSellingReport(){

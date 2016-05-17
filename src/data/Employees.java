@@ -19,8 +19,12 @@ public class Employees
 	/*
 	 * to create a dynamic array that can grow as needed
 	 */
-	public static ArrayList<Employee> employees = new ArrayList<Employee>();
+	private ArrayList<Employee> employees = new ArrayList<Employee>();
 	
+	public ArrayList<Employee> getEmployees() {
+		return employees;
+	}
+
 	/*
 	 * back-up start up 
 	 * to restore/reset employees

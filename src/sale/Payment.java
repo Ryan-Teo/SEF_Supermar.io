@@ -16,6 +16,7 @@ public class Payment
 {
 	private Customer cus;
 	private double total;
+	private Transactions transs = new Transactions();
 	
 	public Payment(Customer cus, double total)
 	{
@@ -100,7 +101,7 @@ public class Payment
 		for (int i=0; i<trans.size(); i++)
 		{	
 			// put all the items into register for record
-			Transactions.transactions.add(trans.get(i));
+			transs.getTransactions().add(trans.get(i));
 			
 			// reduce the qty 
 			try

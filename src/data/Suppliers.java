@@ -16,8 +16,12 @@ public class Suppliers
 	/*
 	 * to create a dynamic array that can grow as needed
 	 */
-	public static ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
-	
+	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
+		
+	public ArrayList<Supplier> getSuppliers() {
+		return suppliers;
+	}
+
 	/*
 	 * back-up start up 
 	 * to restore/reset suppliers

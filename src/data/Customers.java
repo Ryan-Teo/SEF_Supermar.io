@@ -16,8 +16,12 @@ public class Customers
 	/*
 	 * to create a dynamic array that can grow as needed
 	 */
-	public static ArrayList<Customer> customers = new ArrayList<Customer>();
+	private ArrayList<Customer> customers = new ArrayList<Customer>();
 	
+	public ArrayList<Customer> getCustomers() {
+		return customers;
+	}
+
 	/*
 	 * back-up start up 
 	 * to restore/reset customers
