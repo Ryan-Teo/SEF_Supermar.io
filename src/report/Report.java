@@ -19,12 +19,12 @@ public class Report {
 		double totalPrice=0;
 		FuncProduct fProd=new FuncProduct();
 		//Adding relevant products in transaction, in between dates provided
-		for (int i=0; i<trans.size(); i++){	//COMMENTO
-			SaleLineItem transaction = trans.get(i); //DELETO
+		for (int i=0; i<trans.size(); i++){
+			SaleLineItem transaction = trans.get(i);
 			Date date = setDate(transaction.getDate());
 			if(checkDate(date, date1, date2)==true){
-				String ipName = transaction.getIpName();//helo
-				Product prod = fProd.getProduct(ipName);//myname jeff
+				String ipName = transaction.getIpName();
+				Product prod = fProd.getProduct(ipName);
 				Double qty = transaction.getQty();
 				Double revenue = transaction.getRevenue();
 				for(int j=0;j<SalesReport.size();j++){
