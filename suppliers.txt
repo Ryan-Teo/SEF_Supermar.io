@@ -1,3 +1,0 @@
-s200|Farmer Joe's|0487 649 187|joe@farmerjoe.com.au
-s201|Cadbury|1800 250 260|admin@cadbury.com.au
-s202|CSR|1800 800 329|exportsales@sugaraustralia.com.au

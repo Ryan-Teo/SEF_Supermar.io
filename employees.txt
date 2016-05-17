@@ -1,4 +1,0 @@
-s001|Grace|password
-m001|Julia|password
-s002|Ryan|password
-w001|Harry|password
