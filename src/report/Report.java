@@ -24,7 +24,7 @@ public class Report {
 			Date date = setDate(transaction.getDate());
 			if(checkDate(date, date1, date2)==true){
 				String ipName = transaction.getIpName();
-				Product prod = fProd.getProduct(ipName);
+				Product prod = fProd.getProduct(ipName);//keke
 				Double qty = transaction.getQty();
 				Double revenue = transaction.getRevenue();
 				for(int j=0;j<SalesReport.size();j++){
