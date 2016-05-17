@@ -18,6 +18,10 @@ public class Orders {
 	 */
 	public static ArrayList<Order> orders = new ArrayList<Order>();
 	
+	public static ArrayList<Order> getOrders() {
+		return orders;
+	}
+
 	/*
 	 * back-up start up 
 	 * to restore/reset orders
