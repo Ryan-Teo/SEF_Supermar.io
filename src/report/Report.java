@@ -21,7 +21,7 @@ public class Report {
 		//Adding relevant products in transaction, in between dates provided
 		for (int i=0; i<trans.size(); i++){
 			SaleLineItem transaction = trans.get(i);
-			Date date = setDate(transaction.getDate());
+			Date date = setDate(transaction.getDate());//hello
 			if(checkDate(date, date1, date2)==true){
 				String ipName = transaction.getIpName();
 				Product prod = fProd.getProduct(ipName);
