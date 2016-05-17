@@ -19,7 +19,7 @@ public class Report {
 		double totalPrice=0;
 		FuncProduct fProd=new FuncProduct();
 		//Adding relevant products in transaction, in between dates provided
-		for (int i=0; i<trans.size(); i++){	
+		for (int i=0; i<trans.size(); i++){	//COMMENTO
 			SaleLineItem transaction = trans.get(i);
 			Date date = setDate(transaction.getDate());
 			if(checkDate(date, date1, date2)==true){
