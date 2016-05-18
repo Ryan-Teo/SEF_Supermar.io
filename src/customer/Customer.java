@@ -2,7 +2,7 @@ package customer;
 
 public class Customer 
 {
-	private String cID;
+	private String cID;//Grace's change
 	private String cName;
 	private double balance;
 	private int point;
