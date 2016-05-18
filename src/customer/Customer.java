@@ -4,7 +4,7 @@ public class Customer
 {
 	private String cID;//Grace's change
 	private String cName; //no
-	private double balance;
+	private double balance;//Julia's change
 	private int point;
 
 	public Customer(String cID, String cName, double balance, int point)
