@@ -3,7 +3,7 @@ package customer;
 public class Customer 
 {
 	private String cID;//Grace's change
-	private String cName;
+	private String cName; //no
 	private double balance;
 	private int point;
 
