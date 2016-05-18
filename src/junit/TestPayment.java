@@ -15,7 +15,7 @@ import sale.SaleLineItem;
 public class TestPayment 
 {
 	ArrayList<SaleLineItem> trans = new ArrayList<SaleLineItem>();
-	Payment payment = new Payment();
+	Payment payment1, payment2;
 	Customer cus;
 	Scanner sc = new Scanner(System.in);
 	
@@ -25,7 +25,8 @@ public class TestPayment
 		cus = new Customer("c006", "Grace Zheng", 500, 50);
 		
 		// when the transaction total is $34
-		payment.printPayment(cus, trans, 34, sc);
+		payment1 = new Payment(cus, 34);
+		payment1.printPayment(trans, sc);
 	}
 	
 	@Test	
@@ -45,9 +46,11 @@ public class TestPayment
 	@Test
 	public void testNotEnoughFund()
 	{
-		// only $476 left in account, can't afford 700
-		payment.printPayment(cus, trans, 700, sc);
+		// cus has another transaction of $700
+		payment2 = new Payment(cus, 700);
+		payment2.printPayment(trans, sc);
 		
+		// only $476 left in account, can't afford 700		
 		// payment fails, account balance stays the same
 		assertEquals(476, cus.getBalance(), 0);
 	}

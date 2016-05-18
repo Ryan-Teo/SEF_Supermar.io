@@ -30,7 +30,7 @@ public class Payment
 		int dis, ptEarned, pt;
 		Boolean paid;
 		
-		dis = loyaltyDis(cus, total);
+		dis = loyaltyDis();
 		amtPaid = total - dis;
 		ptEarned = loyaltyPt(amtPaid);
 		paid = cus.paid(amtPaid);
@@ -70,7 +70,7 @@ public class Payment
 		}		
 	}
 	
-	public int loyaltyDis(Customer cus, double total)
+	public int loyaltyDis()
 	{
 		int point = cus.getPoint();
 		
