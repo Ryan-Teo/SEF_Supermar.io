@@ -37,7 +37,7 @@ public class SaleMenu {
 		
 		// add new customer
 		case "1":
-			//TODO
+			sStaff.addNewCustomer(sc);
 			break;
 			
 		// top up
