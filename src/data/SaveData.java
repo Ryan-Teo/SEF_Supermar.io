@@ -153,7 +153,7 @@ public class SaveData
 			int bulkDis = (int) product.getBulkDis(); 
 			
 			
-			pw.printf("%s|%s|%.2f|%s|%s|%d|%d|%d|%d|%d|%d\n", 
+			pw.printf("%s|%s|%.2f|%s|%s|%.2f|%d|%d|%d|%d|%d\n", 
 					pID, pName, unitPrice, sID, location, disPrice, stockLvl, replenishLvl, reorderQty, bulkQty, bulkDis);
 			}
 		}

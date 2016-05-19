@@ -65,8 +65,7 @@ public class FuncProduct
 		else if (prod instanceof NPProduct)
 		{
 			((PProduct) prod).searchInfo();
-		}
-		
+		}		
 		
 		Helpers.pause(sc);
 	}

@@ -180,7 +180,7 @@ public class LoadData
 			String location = st.nextToken();
 			double disPrice = Double.parseDouble(st.nextToken());
 			
-			if(pID.contains("pp"))
+			if(pID.charAt(0) == 'p')
 			{
 			double stockLvl = Double.parseDouble(st.nextToken());
 			double replenishLvl = Double.parseDouble(st.nextToken());
@@ -191,7 +191,7 @@ public class LoadData
 			
 			products.add(new PProduct(pID, pName, unitPrice, sID, location, disPrice, stockLvl, replenishLvl, reorderQty, bulkQty, bulkDis));
 			}
-			else if(pID.contains("np"))
+			else if(pID.charAt(0) == 'n')
 			{
 			int stockLvl = Integer.parseInt(st.nextToken());
 			int replenishLvl = Integer.parseInt(st.nextToken());
