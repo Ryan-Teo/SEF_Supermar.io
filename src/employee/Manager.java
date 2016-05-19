@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import data.AppendData;
 import data.LoadData;
+import data.ResetData;
 import data.SaveData;
 import exceptions.NotFoundException;
+import product.FuncProduct;
 import product.NPProduct;
 import product.PProduct;
 import product.Product;
@@ -24,7 +27,7 @@ public class Manager extends Employee {
 		int stockLvl, replenishLvl, reorderQty, bulkQty;
 		double unitPrice, pStockLvl,pReplenishLvl, pReorderQty, pBulkQty, bulkDis, disPrice;
 		
-		ArrayList<Product> products = load();
+		ArrayList<Product> products = new ArrayList<Product>();
 				
 		// product ID
 		System.out.print("Please enter new Product I.D: ");
@@ -129,9 +132,12 @@ public class Manager extends Employee {
 		}		
 		
 		/*
-		 * save the array list to file
+		 * append the new product to file
 		 */
-		save(products);
+		AppendData append = new AppendData();
+		try {
+			append.appendProducts(products);
+		} catch (IOException e) {}
 	}
 	
 	public void editCurrentItem(Scanner sc)
@@ -140,8 +146,20 @@ public class Manager extends Employee {
 		String pID;
 		int check = 0;
 		String choice;
+		FuncProduct fp = new FuncProduct();
 		
-		ArrayList<Product> products = load();
+		/*
+		 * create an array list
+		 * and load it from file
+		 */
+		ArrayList<Product> products = new ArrayList<Product>();
+		LoadData load = new LoadData();
+		
+		try 
+		{
+			products = load.loadProducts();
+		}
+		catch (Exception e)	{}
 		
 		/*
 		 * loop until product found
@@ -150,26 +168,7 @@ public class Manager extends Employee {
 			try {
 				System.out.print("Please enter product ID/Name: ");
 				pID = sc.nextLine();
-				
-				for (int i = 0; i < products.size(); i++)	
-					if (products.get(i).getpID().compareTo(pID) == 0 
-						|| products.get(i).getpName().compareTo(pID) == 0)
-					{
-						if (products.get(i)instanceof PProduct)
-						{
-							prod = (PProduct) products.get(i);
-						}
-						else if (products.get(i)instanceof NPProduct)
-						{
-							prod = (NPProduct) products.get(i);
-						}
-					}
-				
-				if (prod == null)
-				{
-					throw new NotFoundException(pID);
-				}
-				
+				prod = fp.getProduct(pID, products);				
 				check = 1;
 			} catch (NotFoundException e) {
 				e.printErrorMessage();
@@ -211,33 +210,39 @@ public class Manager extends Employee {
 		/*
 		 * save the array list to file
 		 */
-		save(products);
-	}
-	
-	private ArrayList<Product> load()
-	{
-		/*
-		 * create an array list
-		 * and load it from file
-		 */
-		ArrayList<Product> products = new ArrayList<Product>();
-		LoadData load = new LoadData();
-		
-		try 
-		{
-			products = load.loadProducts();
-		}
-		catch (Exception e)	{}
-		
-		return products;
-	}
-	
-	private void save(ArrayList<Product> products)
-	{
-		SaveData save = new SaveData();
-		
+		SaveData save = new SaveData();		
 		try {
 			save.saveProducts(products);
 		} catch (IOException e) {}
+	}
+	
+	public void resetSystem(Scanner sc)
+	{
+		Boolean exit = false;
+		
+		System.out.printf("\nDoing such will reset data for customers, employees, products and suppliers.\n"
+						+ "However, data for transaction history and order history will remain unchanged.\n\n");
+		
+		do
+		{
+			System.out.print("Do you still want to reset the system? (Y/N) ");		
+			String choice = sc.nextLine();
+			
+			if(choice.equals("Y"))
+			{
+				ResetData reset = new ResetData();
+				reset.reset();
+				
+				System.out.printf("\nData reset successfully.\n\n");
+				exit = true;
+			}
+			else if(choice.equals("N"))
+			{
+				System.out.printf("\nData stays unchanged.\n\n");
+				exit = true;
+			}
+			else
+				System.out.println("Invalid entry.");
+		} while(!exit);		
 	}
 }

@@ -24,6 +24,7 @@ public class ManagerMenu {
 		System.out.println("1. Add New Product");
 		System.out.println("2. Edit Current Product");
 		System.out.println("3. Generate Report");
+		System.out.println("4. Reset System");
 		System.out.println("Q. Quit");
 		System.out.println();
 		System.out.print("Please enter your choice: ");
@@ -48,6 +49,11 @@ public class ManagerMenu {
 		// generate report
 		case "3":
 			// TODO
+			break;
+			
+		// reset system
+		case "4":
+			manager.resetSystem(sc);
 			break;
 			
 		// quit

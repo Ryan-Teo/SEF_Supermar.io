@@ -20,24 +20,12 @@ public class PProduct extends Product{
 		return stockLvl;
 	}
 
-	public void setStockLvl(double stockLvl) {
-		this.stockLvl = stockLvl;
-	}
-
 	public double getReplenishLvl() {
 		return replenishLvl;
 	}
 
-	public void setReplenishLvl(double replenishLvl) {
-		this.replenishLvl = replenishLvl;
-	}
-
 	public double getReorderQty() {
 		return reorderQty;
-	}
-
-	public void setReorderQty(double reorderQty) {
-		this.reorderQty = reorderQty;
 	}
 
 	public double getBulkQty() {
@@ -83,11 +71,11 @@ public class PProduct extends Product{
 		System.out.println("-------------------------------------");
 		System.out.println("        Product Information"          );
 		System.out.println("-------------------------------------");
-		System.out.println(" I.D.:               " + getpID()          );
-		System.out.println(" Name:               " + getpName()        );
-		System.out.printf(" Price:              $%.2f\n", getUnitPrice());
-		System.out.println(" Stock Level:        " + stockLvl     );
-		System.out.println(" Bulk min amount:    " + bulkQty      );
+		System.out.println(" I.D.:               " + getpID()     );
+		System.out.println(" Name:               " + getpName()   );
+		System.out.printf(" Price:              $%.2f/kg\n", getUnitPrice());
+		System.out.printf(" Stock Level:        %.2fkg\n", stockLvl);
+		System.out.printf(" Bulk min amount:    %.2fkg\n", bulkQty);
 		System.out.printf(" Bulk discount:      %.0f", bulkDis*100);
 		System.out.println("% off");
 
@@ -105,7 +93,7 @@ public class PProduct extends Product{
 		System.out.println(" I.D.:               " + getpID()          );
 		System.out.println(" Name:               " + getpName()        );
 		System.out.printf(" Price:              $%.2f\n", getUnitPrice() );
-		System.out.println(" Stock Level:        " + stockLvl     );
+		System.out.printf(" Stock Level:        %.2fkg", stockLvl);
 		System.out.println(" Location:           " + getLocation()     );
 		System.out.println("-------------------------------------");
 		System.out.println();

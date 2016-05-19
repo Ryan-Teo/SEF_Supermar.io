@@ -4,102 +4,139 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import customer.Customer;
+import data.LoadData;
+import employee.Employee;
 import exceptions.NotFoundException;
 import product.FuncProduct;
 import product.NPProduct;
 import product.PProduct;
 import product.Product;
 import system.Helpers;
+import system.LogIn;
 
 public class Sale 
 {
-	private int exit = 0;	
+	private Customer cus;		
+		
+	/*
+	 * create an array list for sale line items
+	 * reset total to zero
+	 */
+	private ArrayList<SaleLineItem> saleLine = new ArrayList<SaleLineItem>();		
 	private double total = 0;
-	private Customer cus;
 	
-	private FuncProduct fProd = new FuncProduct();
+	private FuncProduct fProd = new FuncProduct();	
+	private ArrayList<Product> products = new ArrayList<Product>();
+	private int exit = 0;	
 	
 	public Sale(Customer cus)
 	{
 		this.cus = cus;
 	}
 		
-	public void startNewTransaction(Scanner scan)
-	{
-		ArrayList<SaleLineItem> transaction = new ArrayList<SaleLineItem>();		
-		total = 0;
+	public void startNewTransaction(Scanner sc)
+	{				
+		/*
+		 * create an array list
+		 * and load products from file
+		 */
+		products = new ArrayList<Product>();
+		LoadData load = new LoadData();
 		
+		try 
+		{
+			products = load.loadProducts();
+		}
+		catch (Exception e)	{}
+		
+		/*
+		 * greeting
+		 * show details
+		 */
 		cus.printDetails();
 		
 		do
 		{
-			printStart();		
-			String option = scan.nextLine();		
-			switchStart(transaction, option, cus, scan);	
+			if(saleLine.size() == 0)
+				printStartMenu();		
+			else
+				printSaleLineMenu();
+			String option = sc.nextLine();		
+			processInput(option, sc);	
 		} while (exit == 0);			
 	}
 	
-	private void printStart()
-	{		
-		System.out.printf("-------------------New Transaction-------------------\n"
-						+ "\n"
-						+ "1. Add Item\n"
-						+ "2. View Product List\n"
-						+ "3. Quit\n"
-						+ "\n"
-						+ "Please enter your choice: ");		
-	}
-	
-	private void switchStart(ArrayList<SaleLineItem> trans, String option, Customer cus, Scanner scan)
+	private void processInput(String option, Scanner sc)
 	{
 		
 		switch(option)
 		{
 		// add item
 		case "1":
-			do
-			{
-				addItem(trans, cus, scan);
-				printAdd(trans);
-				
-				String opt = scan.nextLine();				
-				switchAdd(trans, opt, cus, scan);
-			} while (exit == 0);			
+			addItem(sc);	
 			break;
 		
 		// view product list
 		case "2":
-			fProd.printList(scan);
+			fProd.printList(sc);
 			break;
 		
-		// quit
+		// pay
 		case "3":
+			Payment pay = new Payment(cus, total);
+			pay.printPayment(saleLine, sc);
 			exit = 1;
 			break;
 			
+		// ask for assistance
+		case "4":
+			LogIn login = new LogIn();
+			Employee emp = login.employeeLogin(sc);
+			emp.runEmpMenu(sc);
+			break;
+						
+		// quit only when no item in sale line
+		case "Q":
+			if(saleLine.size() == 0)
+				exit = 1;
+			else
+				System.out.println("Invalid Choise, please re-enter:");
+			break;
+			
 		default:
-			System.out.print("Invalid Choise, please re-enter:");
+			System.out.println("Invalid Choise, please re-enter:");
 		}
 	}
+		
+	private void printStartMenu()
+	{		
+		System.out.printf("-------------------New Transaction-------------------\n"
+						+ "\n"
+						+ "1. Add Item\n"
+						+ "2. View Product List\n"
+						+ "Q. Quit\n"
+						+ "\n"
+						+ "Please enter your choice: ");		
+	}
 	
-	private void printAdd(ArrayList<SaleLineItem> trans)
+	private void printSaleLineMenu()
 	{
 		System.out.printf("-----------------------New Transaction-----------------------\n"
 						+ "%-7s %-20s %-20s %-20s\n", "No.", "Product Name", "Quantity", "Subtotal");
 				
 		String name;
 		double qty, subtotal;
-		
-		for(int i=0; i<trans.size(); i++)
+	
+		for(int i=0; i<saleLine.size(); i++)
 		{
-			name = trans.get(i).getIpName();
-			qty = trans.get(i).getQty();
-			subtotal = trans.get(i).getRevenue();
+			name = saleLine.get(i).getIpName();
+			qty = saleLine.get(i).getQty();
+			subtotal = saleLine.get(i).getRevenue();
 			
 			System.out.printf("%-7d %-20s %-20.2f $%-19.2f\n", i+1, name, qty, subtotal);
 		}
 		
-		total = getTotal(trans);
+		total = getTotal();
 		
 		System.out.printf("-------------------------------------------------------------\n"
 						+ "Total = $%.2f\n", total);	
@@ -113,50 +150,13 @@ public class Sale
 						+ "Please enter your choise: ");	
 	}
 	
-	private void switchAdd(ArrayList<SaleLineItem> trans, String option, Customer cus, Scanner sc)
-	{
-		
-		switch(option)
-		{
-		// add a new item
-		case "1":
-			addItem(trans, cus, sc);
-			printAdd(trans);
-				
-			String opt = sc.nextLine();				
-			switchAdd(trans, opt, cus, sc);	
-			
-			break;
-		
-		// view product list
-		case "2":
-			fProd.printList(sc);
-			break;
-		
-		// pay
-		case "3":
-			Payment pay = new Payment(cus,  total);
-			pay.printPayment(trans, sc);
-			exit = 1;
-			break;
-			
-		// ask for assistance
-		case "4":
-			System.out.println("Function not implemented yet...");
-			/*LogIn login = new LogIn();
-			Employee emp = login.employeeLogin(sc);
-			emp.runEmpMenu(sc);*/
-			break;
-			
-		default:
-			System.out.print("Invalid Choise, please re-enter:");
-		}
-	}
-	
-	private void addItem(ArrayList<SaleLineItem> trans, Customer cus, Scanner sc)
+	private void addItem(Scanner sc)
 	{		
-		// ask and search for product
+		/*
+		 * ask and search for product
+		 */
 		String input;
+		double qty = 0;
 		Product prod = null;
 		boolean check = false;
 		
@@ -164,7 +164,7 @@ public class Sale
 			try {
 				System.out.print("Please enter product name/ID: ");
 				input = sc.nextLine();
-				prod = fProd.getProduct(input);
+				prod = fProd.getProduct(input, products);
 				check = true;
 			} catch (NotFoundException e) {
 				e.printErrorMessage();
@@ -174,25 +174,46 @@ public class Sale
 		prod.addItemInfo();
 		String name = prod.getpName();
 		
-		// ask for qty
-		System.out.print("Please enter the quantity: ");
-		double qty = Double.parseDouble(sc.nextLine());
+		/*
+		 * ask for qty		
+		 */
+		check = false;
+		do{
+			try {				
+				System.out.print("Please enter the quantity: ");
+				qty = Double.parseDouble(sc.nextLine());
+				check = true;
+			} catch (Exception e) {
+				System.out.print("Invalid quantity. ");
+			}
+		}while(!check);
 		
-		// calculate the subtotal
-		double subtotal = getSubtotal(prod, qty);
-		
-		// get the date
-		Helpers helpers = new Helpers();
-		String date = helpers.obtCurrentDate();
-		
-		// get customer id
-		String cID = cus.getcID();
-		
-		// add to arraylist
-		trans.add(new SaleLineItem(name, qty, subtotal, date, cID));
-		
-		// print result
-		System.out.printf("%.2f %s added.\n\n", qty, name);
+		/*
+		 * when qty is not zero
+		 * add the sale line item
+		 * return successful message
+		 */
+		if(qty != 0)
+		{
+			// calculate the subtotal
+			double subtotal = getSubtotal(prod, qty);
+			
+			// get the date
+			Helpers helpers = new Helpers();
+			String date = helpers.obtCurrentDate();
+			
+			// get customer id
+			String cID = cus.getcID();
+			
+			// add to arraylist
+			saleLine.add(new SaleLineItem(name, qty, subtotal, date, cID));
+			
+			// print result
+			if(prod instanceof PProduct)
+				System.out.printf("%.2fkg of %s added.\n\n", qty, name);
+			else if(prod instanceof NPProduct)
+				System.out.printf("%d item of %s added.\n\n", (int)qty, name);
+		}		
 	}
 	
 	/*
@@ -236,12 +257,12 @@ public class Sale
 	/*
 	 * to obtain total
 	 */
-	public double getTotal(ArrayList<SaleLineItem> trans)
+	public double getTotal()
 	{
 		double total = 0;
 		
-		for (int i=0; i<trans.size(); i++)
-			total += trans.get(i).getRevenue();
+		for (int i=0; i<saleLine.size(); i++)
+			total += saleLine.get(i).getRevenue();
 		
 		return total;			
 	}	

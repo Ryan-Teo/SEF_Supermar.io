@@ -9,10 +9,8 @@ import system.Helpers;
 
 public class FuncProduct 
 {
-	public Product getProduct(String pID) throws NotFoundException
+	public Product getProduct(String pID, ArrayList<Product> products) throws NotFoundException
 	{
-		ArrayList<Product> products = load();
-		
 		/*
 		 * search through the array list
 		 * if specified product found, return customer
@@ -43,6 +41,7 @@ public class FuncProduct
 	
 	public void searchProduct(Scanner sc)
 	{
+		ArrayList<Product> products = load();
 		Product prod = null;
 		int check = 0;
 		
@@ -50,7 +49,7 @@ public class FuncProduct
 			try {
 				System.out.print("Please enter product ID/Name: ");
 				String product=sc.nextLine();
-				prod = getProduct(product);
+				prod = getProduct(product, products);
 				check = 1;
 			} catch (NotFoundException e) {
 				e.printErrorMessage();

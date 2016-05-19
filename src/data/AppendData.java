@@ -15,18 +15,18 @@ import product.Product;
 import sale.SaleLineItem;
 import supplier.Supplier;
 
-public class SaveData 
+public class AppendData 
 {
 	/*
-	 * to save all customers 
+	 * to save new customers 
 	 * from array list to file
 	 */
-	public void saveCustomers(ArrayList<Customer> customers) throws IOException
+	public void appendCustomers(ArrayList<Customer> customers) throws IOException
 	{
 		/*
 		 * to create the file
 		 */
-		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter ("customers.txt")));
+		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter ("customers.txt", true)));
 		
 		/*
 		 * to write each element into the file
@@ -46,15 +46,15 @@ public class SaveData
 	}
 	
 	/*
-	 * to save all employees
+	 * to save new employees
 	 * from array list to file
 	 */
-	public void saveEmployees(ArrayList<Employee> employees) throws IOException
+	public void appendEmployees(ArrayList<Employee> employees) throws IOException
 	{
 		/*
 		 * to create the file
 		 */
-		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter ("employees.txt")));
+		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter ("employees.txt", true)));
 		
 		/*
 		 * to write each element into the file
@@ -73,15 +73,15 @@ public class SaveData
 	}
 
 	/*
-	 * to save all orders
+	 * to save new orders
 	 * from array list to file
 	 */
-	public void saveOrders(ArrayList<Order> orders) throws IOException
+	public void appendOrders(ArrayList<Order> orders) throws IOException
 	{
 		/*
 		 * to create the file
 		 */
-		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter ("orders.txt")));
+		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter ("orders.txt", true)));
 		
 		/*
 		 * to write each element into the file
@@ -101,15 +101,15 @@ public class SaveData
 	}
 	
 	/*
-	 * to save all products 
+	 * to save new products 
 	 * from array list to file
 	 */
-	public void saveProducts(ArrayList<Product> products) throws IOException
+	public void appendProducts(ArrayList<Product> products) throws IOException
 	{
 		/*
 		 * to create the file
 		 */
-		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter ("products.txt")));
+		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter ("products.txt", true)));
 		
 		/*
 		 * to write each element into the file
@@ -150,9 +150,10 @@ public class SaveData
 			int replenishLvl = (int) product.getReplenishLvl();
 			int reorderQty = (int) product.getReorderQty();
 			int bulkQty = (int) product.getBulkQty();
-			double bulkDis = product.getBulkDis(); 			
+			int bulkDis = (int) product.getBulkDis(); 
 			
-			pw.printf("%s|%s|%.2f|%s|%s|%.2f|%d|%d|%d|%d|%.2f\n", 
+			
+			pw.printf("%s|%s|%.2f|%s|%s|%.2f|%d|%d|%d|%d|%d\n", 
 					pID, pName, unitPrice, sID, location, disPrice, stockLvl, replenishLvl, reorderQty, bulkQty, bulkDis);
 			}
 		}
@@ -160,15 +161,15 @@ public class SaveData
 	}
 	
 	/*
-	 * to save all suppliers
+	 * to save new suppliers
 	 * from array list to file
 	 */
-	public void saveSuppliers(ArrayList<Supplier> suppliers) throws IOException
+	public void appendSuppliers(ArrayList<Supplier> suppliers) throws IOException
 	{
 		/*
 		 * to create the file
 		 */
-		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter ("suppliers.txt")));
+		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter ("suppliers.txt", true)));
 		
 		/*
 		 * to write each element into the file
@@ -188,15 +189,15 @@ public class SaveData
 	}
 	
 	/*
-	 * to save all transactions 
+	 * to save new transactions 
 	 * from array list to file
 	 */
-	public void saveTransactions(ArrayList<SaleLineItem> transactions) throws IOException
+	public void appendTransactions(ArrayList<SaleLineItem> transactions) throws IOException
 	{
 		/*
 		 * to create the file
 		 */
-		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter ("transactions.txt")));
+		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter ("transactions.txt", true)));
 		
 		/*
 		 * to write each element into the file

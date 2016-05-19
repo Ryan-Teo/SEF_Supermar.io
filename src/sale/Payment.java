@@ -5,19 +5,26 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import customer.Customer;
+import customer.FuncCustomer;
+import data.AppendData;
 import data.LoadData;
 import data.SaveData;
+import employee.Employee;
 import exceptions.NotFoundException;
 import product.FuncProduct;
 import product.NPProduct;
 import product.PProduct;
 import product.Product;
 import system.Helpers;
+import system.LogIn;
 
 public class Payment 
 {
 	private Customer cus;
 	private double total;
+	
+	private double amtPaid;
+	private int pt;
 	
 	public Payment(Customer cus, double total)
 	{
@@ -27,49 +34,58 @@ public class Payment
 	
 	public void printPayment(ArrayList<SaleLineItem> trans, Scanner sc)
 	{
-		double amtPaid, balance;
-		int dis, ptEarned, pt;
+		double balance;
+		int dis, ptEarned;
 		Boolean paid;
+		Boolean exit = false;
 		
 		dis = loyaltyDis();
 		amtPaid = total - dis;
 		ptEarned = loyaltyPt(amtPaid);
-		paid = cus.paid(amtPaid);
 		
-		if (paid)
+		do
 		{
-			balance = cus.getBalance();
-			pt = cus.getPoint() - dis/5*20 + ptEarned;
-			cus.setPoint(pt);			
+			paid = cus.paid(amtPaid);
 			
-			System.out.printf("----------------------------------\n"
-							+ "        Payment Accepted\n"
-							+ "----------------------------------\n");
+			if (paid)
+			{
+				balance = cus.getBalance();
+				pt = cus.getPoint() - dis/5*20 + ptEarned;
+				
+				System.out.printf("----------------------------------\n"
+								+ "        Payment Accepted\n"
+								+ "----------------------------------\n");
+				
+				System.out.printf("Total = $%.2f\n"
+								+ "Loyalty Discount = $%d.00\n"
+								+ "Amount Paid = $%.2f\n"
+								+ "Loyalty Point Earned = %d\n"
+								+ "----------------------------------\n"
+								+ "Customer Information\n"
+								+ "Current Credit = %.2f\n"
+								+ "Current Loyalty Point = %d\n"
+								+ "\n",
+								total, dis, amtPaid, ptEarned, balance, pt);
+								
+				System.out.printf("Thank You for Shopping with Us!\n"
+								+ "----------------------------------\n");
+				
+				processData(trans);
+				
+				Helpers helpers = new Helpers();
+				helpers.pause(sc);
+				
+				exit = true;
+			}
 			
-			System.out.printf("Total = $%.2f\n"
-							+ "Loyalty Discount = $%d.00\n"
-							+ "Amount Paid = $%.2f\n"
-							+ "Loyalty Point Earned = %d\n"
-							+ "----------------------------------\n"
-							+ "Customer Information\n"
-							+ "Current Credit = %.2f\n"
-							+ "Current Loyalty Point = %d\n"
-							+ "\n",
-							total, dis, amtPaid, ptEarned, balance, pt);
-							
-			System.out.printf("Thank You for Shopping with Us!\n"
-							+ "----------------------------------\n");
-			
-			transDone(trans);
-			
-			Helpers helpers = new Helpers();
-			helpers.pause(sc);
-		}
-		
-		else
-		{
-			System.out.println("No enough fund. Please top up!");
-		}		
+			else
+			{
+				System.out.println("No enough fund. Please top up!");
+				LogIn login = new LogIn();
+				Employee emp = login.employeeLogin(sc);
+				emp.runEmpMenu(sc);
+			}		
+		} while(!exit);		
 	}
 	
 	public int loyaltyDis()
@@ -96,36 +112,36 @@ public class Payment
 		return point;
 	}
 	
-	private void transDone(ArrayList<SaleLineItem> trans)
+	private void processData(ArrayList<SaleLineItem> trans)
 	{	
+		LoadData load = new LoadData();
 		FuncProduct fProd = new FuncProduct();
+		FuncCustomer fCus = new FuncCustomer();
+		Customer customer = null;
 		
 		/*
-		 * create an array list
-		 * and load it from file
+		 * create array lists
+		 * and load products and customers from file
 		 */
-		ArrayList<SaleLineItem> transactions = new ArrayList<SaleLineItem>();
-		LoadData load = new LoadData();
-		
+		ArrayList<Product> products = new ArrayList<Product>();	
+		ArrayList<Customer> customers = new ArrayList<Customer>();
 		try 
 		{
-			transactions = load.loadTransactions();
+			products = load.loadProducts();
+			customers = load.loadCustomers();
 		}
 		catch (Exception e)	{}
 		
 		/*
-		 * save all items into array list
+		 * reduce the qty respectively
 		 */
 		for (int i=0; i<trans.size(); i++)
-		{	
-			transactions.add(trans.get(i));
-			
-			// reduce the qty 
+		{				
 			try
 			{
 				String name = trans.get(i).getIpName();
 				double qty = trans.get(i).getQty();
-				Product prod = fProd.getProduct(name);
+				Product prod = fProd.getProduct(name, products);
 				
 				if(prod instanceof PProduct)
 					((PProduct) prod).sold(qty);
@@ -133,14 +149,27 @@ public class Payment
 					((NPProduct) prod).sold(qty);
 			}
 			catch (NotFoundException nfe) {} 			
-		}		
+		}	
 		
 		/*
-		 * save data back to file
+		 * reduce credit for customer
 		 */
+		try {
+			customer = fCus.getCustomer(cus.getcID(), customers);
+			customer.paid(amtPaid);
+			customer.setPoint(pt);
+		} catch (NotFoundException nfe) {}
+		
+		/*
+		 * append new transactions to file
+		 * save updated products and customer back to file
+		 */
+		AppendData append = new AppendData();
 		SaveData save = new SaveData();
 		try {
-			save.saveTransactions(transactions);
+			append.appendTransactions(trans);
+			save.saveProducts(products);
+			save.saveCustomers(customers);
 		} catch (IOException e) {}
 	}
 }

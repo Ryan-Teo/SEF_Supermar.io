@@ -2,26 +2,12 @@ package employee;
 
 import java.util.ArrayList;
 
-import data.LoadData;
 import exceptions.NotFoundException;
 
 public class FuncEmployee 
 {
-	public Employee getEmployee(String eID) throws NotFoundException
+	public Employee getEmployee(String eID, ArrayList<Employee> employees) throws NotFoundException
 	{
-		/*
-		 * create an array list
-		 * and load it from file
-		 */
-		ArrayList<Employee> employees = new ArrayList<Employee>();
-		LoadData load = new LoadData();
-		
-		try 
-		{
-			employees = load.loadEmployees();
-		}
-		catch (Exception e)	{}
-		
 		/*
 		 * search through the array list
 		 * if specified employee found, return customer
