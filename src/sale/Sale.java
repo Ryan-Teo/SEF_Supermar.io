@@ -100,11 +100,11 @@ public class Sale
 			if(saleLine.size() == 0)
 				exit = 1;
 			else
-				System.out.println("Invalid Choise, please re-enter:");
+				System.out.println("Invalid Choice, please re-enter:");
 			break;
 			
 		default:
-			System.out.println("Invalid Choise, please re-enter:");
+			System.out.println("Invalid Choice, please re-enter:");
 		}
 	}
 		

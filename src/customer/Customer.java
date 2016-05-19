@@ -73,6 +73,6 @@ public class Customer
 	public void topUp(double amt)
 	{
 		balance += amt;
-		System.out.printf("Top up successful! New Balance = $%.2f \n", balance);
+		System.out.printf("\nTop up successfully! New Balance = $%.2f \n\n", balance);
 	}
 }

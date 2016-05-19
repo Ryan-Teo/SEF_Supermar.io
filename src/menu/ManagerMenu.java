@@ -59,7 +59,10 @@ public class ManagerMenu {
 		// quit
 		case "Q":
 			System.out.print("Quitting admin mode...\n\n");
-			break;			
+			break;		
+			
+		default:
+			System.out.printf("Invalid Choice\n\n");
 		}
 	}
 }

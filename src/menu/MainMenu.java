@@ -57,7 +57,7 @@ public class MainMenu
 				break;
 				
 			default:
-				System.out.printf("Invalid Choise\n\n");
+				System.out.printf("Invalid Choice\n\n");
 			}
 		} while (!input.equals("E"));
 		
