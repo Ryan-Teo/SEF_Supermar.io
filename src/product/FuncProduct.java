@@ -1,45 +1,45 @@
 package product;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-import data.Products;
+import data.LoadData;
+import data.SaveData;
 import exceptions.*;
 import system.Helpers;
 
-public class FuncProduct {
-	private Products prods = new Products();
-	
-	public Product getProduct(String pID) throws NotFoundException{
-		Product product = null;
-		for (int a = 0; a < prods.getProducts().size(); a++)	
-			if (prods.getProducts().get(a).getpID().compareTo(pID) == 0)
+public class FuncProduct 
+{
+	public Product getProduct(String pID) throws NotFoundException
+	{
+		ArrayList<Product> products = load();
+		
+		/*
+		 * search through the array list
+		 * if specified product found, return customer
+		 * otherwise, throw exception and return null
+		 */	
+		Product prod = null;
+		for (int a = 0; a < products.size(); a++)	
+			if (products.get(a).getpID().compareTo(pID) == 0 
+				|| products.get(a).getpName().compareTo(pID) == 0)
 			{
-				if (prods.getProducts().get(a)instanceof PProduct)
+				if (products.get(a)instanceof PProduct)
 				{
-					product = (PProduct) prods.getProducts().get(a);
+					prod = (PProduct) products.get(a);
 				}
-				else if (prods.getProducts().get(a)instanceof NPProduct)
+				else if (products.get(a)instanceof NPProduct)
 				{
-					product = (NPProduct) prods.getProducts().get(a);
-				}
-			}
-			else if (prods.getProducts().get(a).getpName().compareTo(pID) == 0)
-			{
-				if (prods.getProducts().get(a)instanceof PProduct)
-				{
-					product = (PProduct) prods.getProducts().get(a);
-				}
-				else if (prods.getProducts().get(a)instanceof NPProduct)
-				{
-					product = (NPProduct) prods.getProducts().get(a);
+					prod = (NPProduct) products.get(a);
 				}
 			}
 		
-		if (product == null)
+		if (prod == null)
 		{
 			throw new NotFoundException(pID);
 		}
-		return product;	
+		return prod;	
 	}
 	
 	
@@ -73,6 +73,8 @@ public class FuncProduct {
 	
 	public void printList(Scanner sc) 
 	{
+		ArrayList<Product> products = load();
+		
 		/*
 		 * headings
 		 */
@@ -82,9 +84,9 @@ public class FuncProduct {
 		/*
 		 * to print details one by one
 		 */
-		for (int i=1; i<=prods.getProducts().size(); i++)
+		for (int i=1; i<=products.size(); i++)
 		{						
-			Product prod = prods.getProducts().get(i-1);
+			Product prod = products.get(i-1);
 			
 			String pID = prod.getpID();
 			String pName = prod.getpName();
@@ -127,6 +129,8 @@ public class FuncProduct {
 		String pID, pName, sID, location, type;
 		int stockLvl, replenishLvl, reorderQty, bulkQty;
 		double unitPrice, pStockLvl,pReplenishLvl, pReorderQty, pBulkQty, bulkDis, disPrice;
+		
+		ArrayList<Product> products = load();
 				
 		// product ID
 		System.out.print("Please enter new Product I.D: ");
@@ -180,7 +184,7 @@ public class FuncProduct {
 			disPrice = Double.parseDouble(sc.nextLine());
 			
 			// add product to the array list
-			prods.getProducts().add(new PProduct(pID, pName, unitPrice, sID, location, disPrice,
+			products.add(new PProduct(pID, pName, unitPrice, sID, location, disPrice,
 								pStockLvl, pReplenishLvl, pReorderQty, pBulkQty, bulkDis));
 			System.out.println("Product added successfully!");
 		}
@@ -225,22 +229,53 @@ public class FuncProduct {
 			disPrice = Double.parseDouble(sc.nextLine());
 			
 			// add product to the array list
-			prods.getProducts().add(new PProduct(pID, pName, unitPrice, sID, location, disPrice,
+			products.add(new PProduct(pID, pName, unitPrice, sID, location, disPrice,
 									stockLvl, replenishLvl, reorderQty, bulkQty, bulkDis));
 			System.out.println("Product added successfully!");
-		}			
+		}		
+		
+		/*
+		 * save the array list to file
+		 */
+		save(products);
 	}
 	
 	public void editCurrentItem(Scanner sc)
 	{		
 		Product prod = null;
+		String pID;
 		int check = 0;
 		String choice;
 		
+		ArrayList<Product> products = load();
+		
+		/*
+		 * loop until product found
+		 */
 		do{
 			try {
 				System.out.print("Please enter product ID/Name: ");
-				prod = getProduct(sc.nextLine());
+				pID = sc.nextLine();
+				
+				for (int i = 0; i < products.size(); i++)	
+					if (products.get(i).getpID().compareTo(pID) == 0 
+						|| products.get(i).getpName().compareTo(pID) == 0)
+					{
+						if (products.get(i)instanceof PProduct)
+						{
+							prod = (PProduct) products.get(i);
+						}
+						else if (products.get(i)instanceof NPProduct)
+						{
+							prod = (NPProduct) products.get(i);
+						}
+					}
+				
+				if (prod == null)
+				{
+					throw new NotFoundException(pID);
+				}
+				
 				check = 1;
 			} catch (NotFoundException e) {
 				e.printErrorMessage();
@@ -278,5 +313,37 @@ public class FuncProduct {
 			
 			System.out.println("Promotional sale price editted successfully!");
 		}
+		
+		/*
+		 * save the array list to file
+		 */
+		save(products);
+	}
+	
+	private ArrayList<Product> load()
+	{
+		/*
+		 * create an array list
+		 * and load it from file
+		 */
+		ArrayList<Product> products = new ArrayList<Product>();
+		LoadData load = new LoadData();
+		
+		try 
+		{
+			products = load.loadProducts();
+		}
+		catch (Exception e)	{}
+		
+		return products;
+	}
+	
+	private void save(ArrayList<Product> products)
+	{
+		SaveData save = new SaveData();
+		
+		try {
+			save.saveProducts(products);
+		} catch (IOException e) {}
 	}
 }

@@ -1,10 +1,12 @@
 package sale;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import customer.Customer;
-import data.Transactions;
+import data.LoadData;
+import data.SaveData;
 import exceptions.NotFoundException;
 import product.FuncProduct;
 import product.NPProduct;
@@ -16,7 +18,6 @@ public class Payment
 {
 	private Customer cus;
 	private double total;
-	private Transactions transs = new Transactions();
 	
 	public Payment(Customer cus, double total)
 	{
@@ -98,10 +99,25 @@ public class Payment
 	{	
 		FuncProduct fProd = new FuncProduct();
 		
+		/*
+		 * create an array list
+		 * and load it from file
+		 */
+		ArrayList<SaleLineItem> transactions = new ArrayList<SaleLineItem>();
+		LoadData load = new LoadData();
+		
+		try 
+		{
+			transactions = load.loadTransactions();
+		}
+		catch (Exception e)	{}
+		
+		/*
+		 * save all items into array list
+		 */
 		for (int i=0; i<trans.size(); i++)
 		{	
-			// put all the items into register for record
-			transs.getTransactions().add(trans.get(i));
+			transactions.add(trans.get(i));
 			
 			// reduce the qty 
 			try
@@ -117,5 +133,13 @@ public class Payment
 			}
 			catch (NotFoundException nfe) {} 			
 		}		
+		
+		/*
+		 * save data back to file
+		 */
+		SaveData save = new SaveData();
+		try {
+			save.saveTransactions(transactions);
+		} catch (IOException e) {}
 	}
 }
