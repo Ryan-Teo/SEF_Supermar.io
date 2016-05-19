@@ -65,11 +65,14 @@ public class FuncProduct
 			((PProduct) prod).searchInfo();
 		}		
 		
-		Helpers.pause(sc);
+		Helpers helpers = new Helpers();
+		helpers.pause(sc);
 	}
 	
 	public void printList(Scanner sc) 
 	{
+		Helpers helpers = new Helpers();
+		
 		ArrayList<Product> products = load();
 		
 		/*
@@ -110,7 +113,7 @@ public class FuncProduct
 			 */			
 			if(i%10 == 0)
 			{
-				Helpers.pause(sc);
+				helpers.pause(sc);
 				
 				System.out.println();
 				System.out.printf("%-7s %-20s %-20s %-20s %-20s %-20s\n", 
@@ -118,7 +121,7 @@ public class FuncProduct
 			}
 		}
 		System.out.println();
-		Helpers.pause(sc);
+		helpers.pause(sc);
 	 }
 	
 	private ArrayList<Product> load()

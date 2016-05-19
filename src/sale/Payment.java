@@ -62,7 +62,8 @@ public class Payment
 			
 			transDone(trans);
 			
-			Helpers.pause(sc);
+			Helpers helpers = new Helpers();
+			helpers.pause(sc);
 		}
 		
 		else

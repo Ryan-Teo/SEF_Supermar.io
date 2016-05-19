@@ -8,12 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import customer.Customer;
-import sale.NewTransaction;
+import sale.Sale;
 import sale.SaleLineItem;
 
 public class TestTotal 
 {
-	NewTransaction trans = null;
+	Sale trans = null;
 	Customer cus = null;
 	ArrayList<SaleLineItem> transaction = new ArrayList<SaleLineItem>();
 	double total = 0;
@@ -22,7 +22,7 @@ public class TestTotal
 	public void setUpTransaction()
 	{
 		cus = new Customer("c006", "Grace Zheng", 500, 50);
-		trans = new NewTransaction(cus);
+		trans = new Sale(cus);
 		
 		transaction.add(new SaleLineItem("name", 0.0, 25.0, "date", "c006"));
 		transaction.add(new SaleLineItem("name", 0.0, 38.9, "date", "c006"));

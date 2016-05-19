@@ -1,8 +1,6 @@
 package sale;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 import customer.Customer;
@@ -11,8 +9,9 @@ import product.FuncProduct;
 import product.NPProduct;
 import product.PProduct;
 import product.Product;
+import system.Helpers;
 
-public class NewTransaction 
+public class Sale 
 {
 	private int exit = 0;	
 	private double total = 0;
@@ -20,7 +19,7 @@ public class NewTransaction
 	
 	private FuncProduct fProd = new FuncProduct();
 	
-	public NewTransaction(Customer cus)
+	public Sale(Customer cus)
 	{
 		this.cus = cus;
 	}
@@ -183,7 +182,8 @@ public class NewTransaction
 		double subtotal = getSubtotal(prod, qty);
 		
 		// get the date
-		String date = obtTransDate();
+		Helpers helpers = new Helpers();
+		String date = helpers.obtCurrentDate();
 		
 		// get customer id
 		String cID = cus.getcID();
@@ -244,15 +244,5 @@ public class NewTransaction
 			total += trans.get(i).getRevenue();
 		
 		return total;			
-	}	
-	
-	/*
-	 * to obtain transaction date
-	 */
-	private String obtTransDate()
-	{
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		Date date = new Date();
-		return dateFormat.format(date);
 	}	
 }
