@@ -93,6 +93,17 @@ public class Sale
 			LogIn login = new LogIn();
 			Employee emp = login.employeeLogin(sc);
 			emp.runEmpMenu(sc);
+			System.out.println("'o' to override transaction");
+			System.out.println("'c' to cancel transaction");
+			
+			String line  = sc.nextLine();
+			
+			if(line.equals("o")){
+				overrideTransaction(saleLine,sc);
+			}
+			else if(line.equals("c")){
+				cancelTransaction(saleLine,sc);
+			}
 			break;
 						
 		// quit only when no item in sale line
@@ -266,4 +277,65 @@ public class Sale
 		
 		return total;			
 	}	
+	private void overrideTransaction(ArrayList<SaleLineItem> saleLine, Scanner sc)
+	{
+		
+		String input;
+		do{
+				
+				System.out.println("Specify order item name to be overriden : ");
+				String name = sc.nextLine();
+				System.out.println("Specify new amount of quantity : ");
+				Double quantity = Double.parseDouble(sc.nextLine());
+				
+				for(int i = 0; i<saleLine.size() ;i++)
+				{
+					if(name.equals(saleLine.get(i).getIpName()))
+					{
+						if(quantity > 0)
+						{
+							//Overriding quantityOrdered
+							((SaleLineItem) saleLine.get(i)).setQty(quantity);
+							System.out.println("Overriding transaction successful");
+							System.out.println("New Quantity : "+ ((SaleLineItem) saleLine.get(i)).getQty());
+							break;
+						}
+						else if (quantity == 0)
+						{
+							//Remove orderLine from the transaction
+							saleLine.remove(saleLine.get(i));
+							System.out.println("Order item is removed.");
+							break;
+						}
+					}
+					else
+					{
+						System.out.println("Order item not found.");
+						break;
+					}
+				}
+				System.out.println("Is there anything else to override? (yes/no) ");
+				input  = sc.nextLine();
+				
+			}while(!input.equals("no"));
+		}
+	
+	private void cancelTransaction(ArrayList<SaleLineItem> saleLine, Scanner sc)
+	{
+	
+		System.out.println("Cancel the whole transaction?(yes/no)");
+		String input = sc.nextLine();
+		
+		if(input.equals("yes"))
+		{
+			for(int i = 0; i<saleLine.size() ;i++)
+			{
+				saleLine.remove(i);
+			}
+		}
+		else
+		{
+			System.out.println("Canceling transaction is aborted");
+		}
+	}
 }
