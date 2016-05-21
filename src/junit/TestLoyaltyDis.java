@@ -19,7 +19,6 @@ public class TestLoyaltyDis
 	{
 		cus = new Customer("c006", "Grace Zheng", 500, 50);
 		// $5 for every 20 points, max dis = $10
-		
 		payment = new Payment(cus);
 	}
 	

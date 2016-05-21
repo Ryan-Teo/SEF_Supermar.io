@@ -58,14 +58,14 @@ public class TestReport {
 	public void test2() throws Exception {
 		String date1="01/01/2016",date2="03/01/2016";
 		rep.salesReport(trans, date1, date2);
-		assertEquals(rep.getReport().size(),5,0);		
+		assertEquals(rep.getSalesReport().size(),5,0);		
 	}
 	
 	@Test
 	public void test3() throws Exception {
 		String date1="01/01/2016",date2="05/01/2016";
 		rep.salesReport(trans, date1, date2);
-		assertEquals(rep.getReport().size(),9,0);		
+		assertEquals(rep.getSalesReport().size(),9,0);		
 	}
 	
 	@Test(expected=InvalidDateException.class)

@@ -8,7 +8,8 @@ import product.FuncProduct;
 
 public class WarehouseMenu 
 {
-	public void runEmployeeMenu(Employee emp, Scanner scan){
+	public void runEmployeeMenu(Employee emp, Scanner scan)
+	{
 		String input = null;
 	  do{
 			printMenu();
@@ -18,7 +19,8 @@ public class WarehouseMenu
 	  }while(!input.equals("Q"));
 	}
 	
-	private void printMenu(){
+	private void printMenu()
+	{
 		System.out.println("-----Warehouse Menu-----");
 		System.out.println("1. Replenish Stock");
 		System.out.println("2. Search For Product");
@@ -28,14 +30,15 @@ public class WarehouseMenu
 		System.out.print("Please enter your choice: ");
 	}
 
-	private void processInput(String input, Scanner sc, Employee emp){
+	private void processInput(String input, Scanner sc, Employee emp)
+	{
 		FuncProduct fProd = new FuncProduct();
+		WarehouseStaff wStaff = (WarehouseStaff) emp;
 		
 		switch(input){
 		
 		// replenish stock
 		case "1":
-			WarehouseStaff wStaff = (WarehouseStaff) emp;
 			wStaff.replenish(sc);
 			break;
 			
@@ -52,7 +55,10 @@ public class WarehouseMenu
 		// quit
 		case "Q":
 			System.out.print("Quitting admin mode...\n\n");
-			break;			
+			break;
+			
+		default:
+			System.out.printf("Invalid Choice\n\n");
 		}
 	}
 }

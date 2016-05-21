@@ -5,7 +5,7 @@ import java.util.Scanner;
 import customer.Customer;
 import employee.Employee;
 import product.FuncProduct;
-import sale.NewTransaction;
+import sale.Sale;
 import system.LogIn;
 
 public class MainMenu 
@@ -17,7 +17,7 @@ public class MainMenu
 		
 		Customer cus = null;
 		Employee emp = null;
-		NewTransaction nTrans;
+		Sale sale;
 		FuncProduct fProd = new FuncProduct();	
 		LogIn login = new LogIn();
 		
@@ -31,8 +31,8 @@ public class MainMenu
 			// start new transaction, require customer to login
 			case "1":
 				cus = login.customerLogin(sc);	
-				nTrans = new NewTransaction(cus);
-				nTrans.startNewTransaction(sc);
+				sale = new Sale(cus);
+				sale.startNewTransaction(sc);
 				break;
 				
 			// search for product
@@ -57,7 +57,7 @@ public class MainMenu
 				break;
 				
 			default:
-				System.out.printf("Invalid Choise\n\n");
+				System.out.printf("Invalid Choice\n\n");
 			}
 		} while (!input.equals("E"));
 		

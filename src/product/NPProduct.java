@@ -23,24 +23,12 @@ public class NPProduct extends Product{
 		return stockLvl;
 	}
 
-	public void setStockLvl(int stockLvl) {
-		this.stockLvl = stockLvl;
-	}
-
 	public int getReplenishLvl() {
 		return replenishLvl;
 	}
 
-	public void setReplenishLvl(int replenishLvl) {
-		this.replenishLvl = replenishLvl;
-	}
-
 	public int getReorderQty() {
 		return reorderQty;
-	}
-
-	public void setReorderQty(int reorderQty) {
-		this.reorderQty = reorderQty;
 	}
 
 	public int getBulkQty() {
@@ -88,7 +76,7 @@ public class NPProduct extends Product{
 		System.out.println("-------------------------------------");
 		System.out.println(" I.D.:               " + getpID()          );
 		System.out.println(" Name:               " + getpName()        );
-		System.out.printf(" Price:              $%.2f\n", getUnitPrice());
+		System.out.printf(" Price:              $%.2f/item\n", getUnitPrice());
 		System.out.println(" Stock Level:        " + stockLvl     );
 		System.out.println(" Bulk min amount:    " + bulkQty      );
 		System.out.printf(" Bulk discount:      %.0f", bulkDis*100);

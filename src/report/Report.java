@@ -1,16 +1,15 @@
 package report;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
-import data.Orders;
-import exceptions.InvalidDateException;
 import order.Order;
 import product.*;
 import sale.*;
+import system.Helpers;
 
 public class Report {
+	Helpers help = new Helpers();
 	private ArrayList<ReportItem> SalesReport = new ArrayList<ReportItem>();
-	
+		
 	public ArrayList<ReportItem> getSalesReport() {
 		return SalesReport;
 	}
@@ -21,8 +20,8 @@ public class Report {
 		//Adding relevant products in transaction, in between dates provided
 		for (int i=0; i<trans.size(); i++){
 			SaleLineItem transaction = trans.get(i);
-			Date date = setDate(transaction.getDate());
-			if(checkDate(date, date1, date2)==true){
+			Date date = help.setDate(transaction.getDate());
+			if(help.checkDate(date, date1, date2)==true){
 				String ipName = transaction.getIpName();
 				Product prod = fProd.getProduct(ipName);
 				Double qty = transaction.getQty();
@@ -70,9 +69,9 @@ public class Report {
 		int line=16+idLen+nameLen+uPriceLen+qtyLen+revLen;
 		int lineSale=line-"Sales Report".length();
 		
-		printDash((int)lineSale/2);
+		help.printDash((int)lineSale/2);
 		System.out.print("Sales Report");
-		printDash((int)lineSale/2);
+		help.printDash((int)lineSale/2);
 		System.out.println();
 		System.out.printf("| %"+idLen+"s | %"+nameLen+"s | %"+uPriceLen+"s | %"+qtyLen+"s | %"+revLen+"s |\n", "Product ID","Name", "Unit Price","Qty Sold","Revenue");
 		for(int i=0; i<SalesReport.size(); i++){
@@ -86,69 +85,49 @@ public class Report {
 		}
 		int totalLine=line-15-String.valueOf(totalPrice).length();
 		System.out.printf("| Total Price: %"+totalLine+"s |\n","$"+totalPrice);
-		printDash(line);
+		help.printDash(line);
 		System.out.println();
 	}
 	
-	public void supplyReport(){
-		for(int i=0;i<Orders.orders.size();i++){
-			
-			
+	public void supplyReport(ArrayList<Order> orders){
+		Order order;
+		int idLen=8,nameLen=12,qtyLen=11,dateLen=12;
+		for(int i=0; i<orders.size(); i++){
+			order=orders.get(i);
+			/*ID*/
+	    	if(order.getOpID().length() > idLen){
+	    		idLen=order.getOpID().length() ;
+	    	}
+	    	/*Name*/
+	    	if(order.getOpName().length() > nameLen){
+	    		nameLen=order.getOpName().length();
+	    	}
+	    	/*Qty*/
+	    	if(String.valueOf(order.getQtyOrdered()).length() > qtyLen){
+	    		qtyLen=String.valueOf(order.getQtyOrdered()).length();
+	    	}
+	    	/*Date*/
+	    	if(order.getDate().length() > dateLen){
+	    		dateLen=order.getDate().length();
+	    	}
 		}
-		Order(String opID, String opName, double qtyOrdered, String date)
+		int line=13+idLen+nameLen+qtyLen+dateLen;
+		int lineSupply=line-"Supply Report".length();
 		
+		help.printDash((int)lineSupply/2);
+		System.out.print("Supply Report");
+		help.printDash((int)lineSupply/2);
+		System.out.println();
+		for(int i=0;i<orders.size();i++){
+			order=orders.get(i);
+			System.out.printf("| %"+idLen+"s | %"+nameLen+"s | %"+qtyLen+"s | %"+dateLen+"s |\n", order.getOpID(),order.getOpName(),order.getQtyOrdered(),order.getDate());
+		}
+		help.printDash(line);
+		System.out.println();
 	}
 	
 	public void topSellingReport(){
 		
 		
 	}
-	
-	private void printDash(int dash){
-		for(int i=0; i<dash ;i++)
-			System.out.printf("-");	
-	}
-	
-	//Date Check
-	public boolean checkDate(Date date, String date1, String date2) throws Exception{//Check if dates are in between 2 other dates
-		Date min = setDate(date1), max=setDate(date2);
-		if (min.compareTo(date)<=0 && max.compareTo(date)>=0)
-			{
-				return true;
-			}
-		return false;
-	}
-	
-			
-	
-	
-	public boolean checkDateFormat(String date) throws Exception{//Check if date format entered is correct
-		if (date.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})"))
-		    return true;
-		else
-		   throw new InvalidDateException();
-	}
-	
-	//Takes String, checks for correct date format, returns relevant date object
-	public Date setDate(String date1) throws Exception{						
-		Date date = new Date();
-	    SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
-		if(checkDateFormat(date1)==true){
-			date = sdf.parse(date1);
-			return date;
-		}
-		else{
-			return date;
-		}
-	}
-	
-	/*private boolean exists(ArrayList<ReportItem> report ,Product prod){
-		for(int i=0;i<report.size();i++){
-			if(report.get(i).getProd()==prod){
-				return true;
-			}
-		}
-		return false;
-	}*/
-	
 }

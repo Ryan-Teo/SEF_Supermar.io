@@ -1,7 +1,9 @@
 package employee;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import data.LoadData;
 import exceptions.NotFoundException;
 import product.FuncProduct;
 import product.Product;
@@ -23,6 +25,19 @@ public class WarehouseStaff extends Employee
 		Product prod = null;
 		FuncProduct fProd = new FuncProduct();		
 		
+		/*
+		 * create an array list
+		 * and load it from file
+		 */
+		ArrayList<Product> products = new ArrayList<Product>();
+		LoadData load = new LoadData();
+		
+		try 
+		{
+			products = load.loadProducts();
+		}
+		catch (Exception e)	{}
+		
 		System.out.printf("\n------------------Replenishing------------------\n");
 		
 		do
@@ -36,7 +51,7 @@ public class WarehouseStaff extends Employee
 				
 				try 
 				{
-					prod = fProd.getProduct(pID);
+					prod = fProd.getProduct(pID, products);
 					check = true;
 				} 
 				catch (NotFoundException nfe) {nfe.printErrorMessage();}

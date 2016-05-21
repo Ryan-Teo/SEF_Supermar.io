@@ -1,22 +1,32 @@
 package system;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import customer.Customer;
 import customer.FuncCustomer;
+import data.LoadData;
 import employee.Employee;
 import employee.FuncEmployee;
 import exceptions.NotFoundException;
 
 public class LogIn{
 	
-	FuncEmployee fEmp = new FuncEmployee();
-	FuncCustomer fCus = new FuncCustomer();
+	private FuncEmployee fEmp = new FuncEmployee();
+	private FuncCustomer fCus = new FuncCustomer();
+	private LoadData load = new LoadData();		
+	
+	private ArrayList<Customer> customers = new ArrayList<Customer>();
+	private ArrayList<Employee> employees = new ArrayList<Employee>();
 	
 	public Customer customerLogin(Scanner sc)
 	{
+		try 
+		{
+			customers = load.loadCustomers();
+		}catch (Exception e){}		
+		
 		Customer cus = null;
-		FuncCustomer fCus = new FuncCustomer();
 		
 		String cID, cName;
 		boolean check = false;
@@ -34,7 +44,7 @@ public class LogIn{
 			// to authenticate
 			try {
 				check = authenticateCus(cID, cName);
-				cus = fCus.getCustomer(cID);
+				cus = fCus.getCustomer(cID, customers);
 			} catch (NotFoundException e) {}
 			
 			/*
@@ -51,9 +61,13 @@ public class LogIn{
 	}
 	
 	public Employee employeeLogin(Scanner sc)
-	{
+	{	
+		try 
+		{
+			employees = load.loadEmployees();
+		}catch (Exception e){}		
+		
 		Employee emp = null;		
-		FuncEmployee fEmp = new FuncEmployee();
 		
 		String eID, pw;
 		boolean check = false;
@@ -71,7 +85,7 @@ public class LogIn{
 			// to authenticate
 			try {
 				check = authenticateEmp(eID, pw);
-				emp = fEmp.getEmployee(eID);
+				emp = fEmp.getEmployee(eID, employees);
 			} catch (NotFoundException e) {}
 			
 			/*
@@ -90,7 +104,7 @@ public class LogIn{
 	private Boolean authenticateCus(String cID, String name) throws NotFoundException{
 		Boolean check=false;
 		Customer cus = null;
-		cus=fCus.getCustomer(cID);
+		cus=fCus.getCustomer(cID, customers);
 		if(cus.getcName().equals(name)){
 			check=true;
 		}
@@ -100,7 +114,7 @@ public class LogIn{
 	private Boolean authenticateEmp(String eID, String password) throws NotFoundException{
 		Boolean check=false;
 		Employee emp = null;
-		emp=fEmp.getEmployee(eID);
+		emp=fEmp.getEmployee(eID, employees);
 		if(emp.getPassword().equals(password)){
 			check=true;
 		}
