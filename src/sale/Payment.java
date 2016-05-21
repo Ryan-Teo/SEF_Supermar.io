@@ -32,7 +32,7 @@ public class Payment
 		this.total = total;
 	}
 	
-	public void printPayment(ArrayList<SaleLineItem> trans, Scanner sc)
+	public void printPayment(ArrayList<SaleLineItem> trans, Scanner sc) throws Exception
 	{
 		double balance;
 		int dis, ptEarned;
@@ -112,7 +112,7 @@ public class Payment
 		return point;
 	}
 	
-	private void processData(ArrayList<SaleLineItem> trans)
+	private void processData(ArrayList<SaleLineItem> trans) throws Exception
 	{	
 		LoadData load = new LoadData();
 		FuncProduct fProd = new FuncProduct();
@@ -144,7 +144,7 @@ public class Payment
 			{
 				String name = trans.get(i).getIpName();
 				double qty = trans.get(i).getQty();
-				Product prod = fProd.getProduct(name);
+				Product prod = fProd.getProduct(name,load.loadProducts());
 				
 				if(prod instanceof PProduct)
 					((PProduct) prod).sold(qty);

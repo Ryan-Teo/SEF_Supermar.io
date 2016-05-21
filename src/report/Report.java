@@ -1,6 +1,7 @@
 package report;
 import java.util.*;
 
+import data.LoadData;
 import order.Order;
 import product.*;
 import sale.*;
@@ -8,6 +9,7 @@ import system.Helpers;
 
 public class Report {
 	Helpers help = new Helpers();
+	LoadData ld = new LoadData();
 	private ArrayList<ReportItem> SalesReport = new ArrayList<ReportItem>();
 		
 	public ArrayList<ReportItem> getSalesReport() {
@@ -23,7 +25,7 @@ public class Report {
 			Date date = help.setDate(transaction.getDate());
 			if(help.checkDate(date, date1, date2)==true){
 				String ipName = transaction.getIpName();
-				Product prod = fProd.getProduct(ipName);
+				Product prod = fProd.getProduct(ipName,ld.loadProducts());
 				Double qty = transaction.getQty();
 				Double revenue = transaction.getRevenue();
 				for(int j=0;j<SalesReport.size();j++){
@@ -83,7 +85,7 @@ public class Report {
 			double rev=SalesReport.get(i).getRevenue();
 			System.out.printf("| %"+idLen+"s | %"+nameLen+"s | %"+uPriceLen+"s | %"+qtyLen+"s | %"+revLen+"s |\n", pID, pName, price,qtySold,rev);
 		}
-		int totalLine=line-15-String.valueOf(totalPrice).length();
+		int totalLine=line-12-String.valueOf(totalPrice).length();
 		System.out.printf("| Total Price: %"+totalLine+"s |\n","$"+totalPrice);
 		help.printDash(line);
 		System.out.println();

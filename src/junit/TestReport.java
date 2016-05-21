@@ -12,11 +12,13 @@ import org.junit.Test;
 
 import data.*;
 import exceptions.*;
+import order.Order;
 import report.Report;
 import sale.*;
 
 public class TestReport {
 	ArrayList<SaleLineItem> trans = new ArrayList<SaleLineItem>();
+	ArrayList<Order> ord = new ArrayList<Order>();
 	Report rep = new Report();
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -47,7 +49,7 @@ public class TestReport {
 	}
 
 	@Test
-	public void test1() {
+	public void testAddToTrans() {
 		trans.add(new SaleLineItem("chocolate", 10.0, 65.0, "07/01/2016", "t010"));
 		trans.add(new SaleLineItem("grapes", 3.0, 13.5, "08/01/2016", "t011"));
 		trans.add(new SaleLineItem("banana", 4.0, 18.0, "09/01/2016", "t012"));
@@ -55,14 +57,14 @@ public class TestReport {
 	}
 	
 	@Test
-	public void test2() throws Exception {
+	public void testAddToSalesRep() throws Exception {
 		String date1="01/01/2016",date2="03/01/2016";
 		rep.salesReport(trans, date1, date2);
 		assertEquals(rep.getSalesReport().size(),5,0);		
 	}
 	
 	@Test
-	public void test3() throws Exception {
+	public void testAddToSalesRep1() throws Exception {
 		String date1="01/01/2016",date2="05/01/2016";
 		rep.salesReport(trans, date1, date2);
 		assertEquals(rep.getSalesReport().size(),9,0);		
@@ -72,5 +74,19 @@ public class TestReport {
 	public void testdate() throws Exception {
 		String date1="ww/01/2016",date2="05/01/2016";
 		rep.salesReport(trans, date1, date2);	
+	}
+	
+	@Test
+	public void testSuppRep() {
+		try {
+			ord.add(new Order("pp101", "banana", 100.5, "02/05/2016"));
+			ord.add(new Order("np103", "chocolate", 75.0, "05/05/2016"));
+			ord.add(new Order("np104", "sugar", 50.0, "03/05/2016"));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		rep.supplyReport(ord);
+		assertEquals(ord.size(),3,0);		
 	}
 }

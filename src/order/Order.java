@@ -1,21 +1,21 @@
 package order;
 
-import exceptions.NotFoundException;
-import product.FuncProduct;
-import product.Product;
+import data.LoadData;
+import product.*;
 
 public class Order {
 	String opID, opName, date;
 	double qtyOrdered;
 	Product prod;
 	FuncProduct fProd = new FuncProduct();
+	LoadData ld = new LoadData();
 	
-	public Order(String opID, String opName, double qtyOrdered, String date) throws NotFoundException{
+	public Order(String opID, String opName, double qtyOrdered, String date) throws Exception{
 		this.opID=opID;
 		this.opName=opName;
 		this.qtyOrdered=qtyOrdered;
 		this.date=date;
-		prod=fProd.getProduct(opID);
+		prod=fProd.getProduct(opID,ld.loadProducts());
 		prod.replenish(qtyOrdered);
 		
 	}

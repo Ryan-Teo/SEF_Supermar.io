@@ -66,7 +66,7 @@ public class NPProduct extends Product{
 	public void replenish(double qty) {
 		stockLvl += qty;
 		System.out.println("Replenish Successful!");
-		System.out.printf("New stock level of %s is %.2f\n\n", getpName(), stockLvl);			
+		System.out.printf("New stock level of %s is %d\n\n", getpName(), stockLvl);			
 	}
 
 	public void addItemInfo(){
