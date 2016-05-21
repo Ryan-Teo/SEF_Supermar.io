@@ -5,24 +5,19 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import customer.Customer;
 import product.PProduct;
 import product.Product;
 import sale.NewTransaction;
 
 public class TestSubtotal 
 {
-	NewTransaction trans = null;
-	Customer cus = null;
+	NewTransaction trans = new NewTransaction();
 	Product banana, grape;
 	double price = 0;
 	
 	@Before
 	public void setUpProduct()
 	{
-		cus = new Customer("c006", "Grace Zheng", 500, 50);
-		trans = new NewTransaction(cus);
-		
 		banana = new PProduct("pp101","banana",2.00,"s200","1.2",2.00,500.00,100.00,400.00,10.00,0.10);
 		grape = new PProduct("pp102","grapes",4.50,"s201","1.8",3.50,200.00,50.00,150.00,8.00,0.10);
 	}

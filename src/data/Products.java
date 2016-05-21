@@ -18,11 +18,8 @@ public class Products
 	/*
 	 * to create a dynamic array that can grow as needed
 	 */
-	private ArrayList<Product> products = new ArrayList<Product>();
-		
-	public ArrayList<Product> getProducts() {
-		return products;
-	}
+	public static ArrayList<Product> products = new ArrayList<Product>();
+	
 	/*
 	 * back-up start up 
 	 * to restore/reset products

@@ -60,19 +60,19 @@ public class FuncData
 	{
 		try
 		{
-			supp.getSuppliers().clear();
+			Suppliers.suppliers.clear();
 			supp.supplierStartUp();
 			supp.saveSuppliers();
 			
-			prod.getProducts().clear();
+			Products.products.clear();
 			prod.productStartUp();
 			prod.saveProducts();
 			
-			emp.getEmployees().clear();
+			Employees.employees.clear();
 			emp.employeeStartUp();
 			emp.saveEmployees();
 			
-			cus.getCustomers().clear();
+			Customers.customers.clear();
 			cus.customerStartUp();
 			cus.saveCustomers();		
 		}

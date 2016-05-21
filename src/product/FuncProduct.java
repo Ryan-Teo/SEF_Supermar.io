@@ -7,31 +7,30 @@ import exceptions.*;
 import system.Helpers;
 
 public class FuncProduct {
-	private Products prods = new Products();
 	
 	public Product getProduct(String pID) throws NotFoundException{
 		Product product = null;
-		for (int a = 0; a < prods.getProducts().size(); a++)	
-			if (prods.getProducts().get(a).getpID().compareTo(pID) == 0)
+		for (int a = 0; a < Products.products.size(); a++)	
+			if (Products.products.get(a).getpID().compareTo(pID) == 0)
 			{
-				if (prods.getProducts().get(a)instanceof PProduct)
+				if (Products.products.get(a)instanceof PProduct)
 				{
-					product = (PProduct) prods.getProducts().get(a);
+					product = (PProduct) Products.products.get(a);
 				}
-				else if (prods.getProducts().get(a)instanceof NPProduct)
+				else if (Products.products.get(a)instanceof NPProduct)
 				{
-					product = (NPProduct) prods.getProducts().get(a);
+					product = (NPProduct) Products.products.get(a);
 				}
 			}
-			else if (prods.getProducts().get(a).getpName().compareTo(pID) == 0)
+			else if (Products.products.get(a).getpName().compareTo(pID) == 0)
 			{
-				if (prods.getProducts().get(a)instanceof PProduct)
+				if (Products.products.get(a)instanceof PProduct)
 				{
-					product = (PProduct) prods.getProducts().get(a);
+					product = (PProduct) Products.products.get(a);
 				}
-				else if (prods.getProducts().get(a)instanceof NPProduct)
+				else if (Products.products.get(a)instanceof NPProduct)
 				{
-					product = (NPProduct) prods.getProducts().get(a);
+					product = (NPProduct) Products.products.get(a);
 				}
 			}
 		
@@ -82,9 +81,9 @@ public class FuncProduct {
 		/*
 		 * to print details one by one
 		 */
-		for (int i=1; i<=prods.getProducts().size(); i++)
+		for (int i=1; i<=Products.products.size(); i++)
 		{						
-			Product prod = prods.getProducts().get(i-1);
+			Product prod = Products.products.get(i-1);
 			
 			String pID = prod.getpID();
 			String pName = prod.getpName();
@@ -180,7 +179,7 @@ public class FuncProduct {
 			disPrice = Double.parseDouble(sc.nextLine());
 			
 			// add product to the array list
-			prods.getProducts().add(new PProduct(pID, pName, unitPrice, sID, location, disPrice,
+			Products.products.add(new PProduct(pID, pName, unitPrice, sID, location, disPrice,
 								pStockLvl, pReplenishLvl, pReorderQty, pBulkQty, bulkDis));
 			System.out.println("Product added successfully!");
 		}
@@ -225,7 +224,7 @@ public class FuncProduct {
 			disPrice = Double.parseDouble(sc.nextLine());
 			
 			// add product to the array list
-			prods.getProducts().add(new PProduct(pID, pName, unitPrice, sID, location, disPrice,
+			Products.products.add(new PProduct(pID, pName, unitPrice, sID, location, disPrice,
 									stockLvl, replenishLvl, reorderQty, bulkQty, bulkDis));
 			System.out.println("Product added successfully!");
 		}			

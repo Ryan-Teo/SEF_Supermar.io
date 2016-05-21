@@ -10,6 +10,7 @@ import sale.Payment;
 
 public class TestLoyaltyDis 
 {
+	Payment payment;
 	Customer cus;
 	int discount;
 	
@@ -18,14 +19,15 @@ public class TestLoyaltyDis
 	{
 		cus = new Customer("c006", "Grace Zheng", 500, 50);
 		// $5 for every 20 points, max dis = $10
+		
+		payment = new Payment(cus);
 	}
 	
 	@Test
 	// when amount paid is less than max loyalty discount
 	public void testLoyaltyDis1()
 	{
-		Payment payment = new Payment(cus, 7.2);
-		discount = payment.loyaltyDis();
+		discount = payment.loyaltyDis(cus, 7.2);
 		
 		// 7.2<10, max dis can only be $5
 		assertEquals(5, discount, 0);
@@ -35,8 +37,7 @@ public class TestLoyaltyDis
 	// when amount paid the same as max loyalty discount
 	public void testLoyaltyDis2()
 	{
-		Payment payment = new Payment(cus, 10.0);
-		discount = payment.loyaltyDis();
+		discount = payment.loyaltyDis(cus, 10.0);
 		
 		// 10=10, max dis is $10
 		assertEquals(10, discount, 0);
@@ -46,8 +47,7 @@ public class TestLoyaltyDis
 	// when amount paid is more than max loyalty discount
 	public void testLoyaltyDis3()
 	{
-		Payment payment = new Payment(cus, 200);
-		discount = payment.loyaltyDis();
+		discount = payment.loyaltyDis(cus, 200);
 		
 		// 200>10, max dis is $10
 		assertEquals(10, discount, 0);

@@ -16,12 +16,8 @@ public class Orders {
 	/*
 	 * to create a dynamic array that can grow as needed
 	 */
-	private ArrayList<Order> orders = new ArrayList<Order>();
+	public static ArrayList<Order> orders = new ArrayList<Order>();
 	
-	public ArrayList<Order> getOrders() {
-		return orders;
-	}
-
 	/*
 	 * back-up start up 
 	 * to restore/reset orders

@@ -16,7 +16,6 @@ public class Payment
 {
 	private Customer cus;
 	private double total;
-	private Transactions transs = new Transactions();
 	
 	public Payment(Customer cus, double total)
 	{
@@ -30,7 +29,7 @@ public class Payment
 		int dis, ptEarned, pt;
 		Boolean paid;
 		
-		dis = loyaltyDis();
+		dis = loyaltyDis(cus, total);
 		amtPaid = total - dis;
 		ptEarned = loyaltyPt(amtPaid);
 		paid = cus.paid(amtPaid);
@@ -70,7 +69,7 @@ public class Payment
 		}		
 	}
 	
-	public int loyaltyDis()
+	public int loyaltyDis(Customer cus, double total)
 	{
 		int point = cus.getPoint();
 		
@@ -101,7 +100,7 @@ public class Payment
 		for (int i=0; i<trans.size(); i++)
 		{	
 			// put all the items into register for record
-			transs.getTransactions().add(trans.get(i));
+			Transactions.transactions.add(trans.get(i));
 			
 			// reduce the qty 
 			try

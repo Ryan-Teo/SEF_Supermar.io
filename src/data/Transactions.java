@@ -16,12 +16,8 @@ public class Transactions
 	/*
 	 * to create a dynamic array that can grow as needed
 	 */
-	private ArrayList<SaleLineItem> transactions = new ArrayList<SaleLineItem>();
-		
-	public ArrayList<SaleLineItem> getTransactions() {
-		return transactions;
-	}
-
+	public static ArrayList<SaleLineItem> transactions = new ArrayList<SaleLineItem>();
+	
 	/*
 	 * to save all transactions 
 	 * from system (array list) to file
