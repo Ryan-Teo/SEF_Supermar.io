@@ -24,6 +24,7 @@ public class Sale
 	 */
 	private ArrayList<SaleLineItem> saleLine = new ArrayList<SaleLineItem>();		
 	private double total = 0;
+	LoadData ld = new LoadData();
 	
 	private FuncProduct fProd = new FuncProduct();	
 	private ArrayList<Product> products = new ArrayList<Product>();
@@ -34,7 +35,7 @@ public class Sale
 		this.cus = cus;
 	}
 		
-	public void startNewTransaction(Scanner sc)
+	public void startNewTransaction(Scanner sc) throws Exception
 	{				
 		/*
 		 * create an array list
@@ -66,7 +67,7 @@ public class Sale
 		} while (exit == 0);			
 	}
 	
-	private void processInput(String option, Scanner sc)
+	private void processInput(String option, Scanner sc) throws Exception
 	{
 		
 		switch(option)
@@ -161,7 +162,7 @@ public class Sale
 						+ "Please enter your choise: ");	
 	}
 	
-	private void addItem(Scanner sc)
+	private void addItem(Scanner sc) throws Exception
 	{		
 		/*
 		 * ask and search for product
@@ -175,7 +176,7 @@ public class Sale
 			try {
 				System.out.print("Please enter product name/ID: ");
 				input = sc.nextLine();
-				prod = fProd.getProduct(input);
+				prod = fProd.getProduct(input,ld.loadProducts());
 				check = true;
 			} catch (NotFoundException e) {
 				e.printErrorMessage();
