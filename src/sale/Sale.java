@@ -41,12 +41,12 @@ public class Sale
 		 * create an array list
 		 * and load products from file
 		 */
-		products = new ArrayList<Product>();
+		setProducts(new ArrayList<Product>());
 		LoadData load = new LoadData();
 		
 		try 
 		{
-			products = load.loadProducts();
+			setProducts(load.loadProducts());
 		}
 		catch (Exception e)	{}
 		
@@ -171,12 +171,13 @@ public class Sale
 		double qty = 0;
 		Product prod = null;
 		boolean check = false;
+		LoadData productList = new LoadData();
 		
 		do{
 			try {
 				System.out.print("Please enter product name/ID: ");
 				input = sc.nextLine();
-				prod = fProd.getProduct(input,ld.loadProducts());
+				prod = fProd.getProduct(input, productList.loadProducts());
 				check = true;
 			} catch (NotFoundException e) {
 				e.printErrorMessage();
@@ -338,5 +339,13 @@ public class Sale
 		{
 			System.out.println("Canceling transaction is aborted");
 		}
+	}
+
+	public ArrayList<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(ArrayList<Product> products) {
+		this.products = products;
 	}
 }
