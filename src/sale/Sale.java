@@ -40,12 +40,12 @@ public class Sale
 		 * create an array list
 		 * and load products from file
 		 */
-		products = new ArrayList<Product>();
+		setProducts(new ArrayList<Product>());
 		LoadData load = new LoadData();
 		
 		try 
 		{
-			products = load.loadProducts();
+			setProducts(load.loadProducts());
 		}
 		catch (Exception e)	{}
 		
@@ -338,5 +338,13 @@ public class Sale
 		{
 			System.out.println("Canceling transaction is aborted");
 		}
+	}
+
+	public ArrayList<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(ArrayList<Product> products) {
+		this.products = products;
 	}
 }
