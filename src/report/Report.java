@@ -1,7 +1,10 @@
 package report;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 import data.LoadData;
+import exceptions.InvalidDateException;
+import exceptions.NotFoundException;
 import order.Order;
 import product.*;
 import sale.*;
@@ -22,16 +25,28 @@ public class Report {
 		return TopSalesReport;
 	}
 
-	public void salesReport(ArrayList<SaleLineItem> trans, String date1, String date2) throws Exception{
+	public void salesReport(ArrayList<SaleLineItem> trans, Date date1, Date date2){
 		double totalPrice=0;
 		//Adding relevant products in transaction, in between dates provided
 		for (int i=0; i<trans.size(); i++){
 			int bool=0;
 			SaleLineItem transaction = trans.get(i);
-			Date date = help.setDate(transaction.getDate());
+			Date date=null;
+			try {
+				date = help.setDate(transaction.getDate());
+			}catch (Exception e) {
+				System.out.println("System error - 1");
+			}
 			if(help.checkDate(date, date1, date2)==true){
 				String ipName = transaction.getIpName();
-				Product prod = fProd.getProduct(ipName,ld.loadProducts());
+				Product prod = null;
+				try {
+					prod = fProd.getProduct(ipName,ld.loadProducts());
+				} catch (NotFoundException e) {
+					System.out.println("Product not found.");
+				} catch (FileNotFoundException e) {
+					System.out.println("Products file failed to load.");
+				}
 				Double qty = transaction.getQty();
 				Double revenue = transaction.getRevenue();
 				for(int j=0; j<SalesReport.size();j++){

@@ -1,6 +1,7 @@
 package data;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -153,7 +154,7 @@ public class LoadData
 	 * from file to an array list
 	 * return the array list
 	 */
-	public ArrayList<Product> loadProducts() throws Exception
+	public ArrayList<Product> loadProducts() throws FileNotFoundException
 	{
 		/*
 		 * create an array list

@@ -1,5 +1,6 @@
 package system;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
@@ -30,9 +31,8 @@ public class Helpers
 	}	
 
 	//Check if dates are in between 2 other dates
-	public boolean checkDate(Date date, String date1, String date2) throws Exception{
-		Date min = setDate(date1), max=setDate(date2);
-		if (min.compareTo(date)<=0 && max.compareTo(date)>=0)
+	public boolean checkDate(Date date, Date date1, Date date2){
+		if (date1.compareTo(date)<=0 && date2.compareTo(date)>=0)
 			{
 				return true;
 			}
@@ -40,7 +40,7 @@ public class Helpers
 	}	
 	
 	//Check if date format entered is correct
-	public boolean checkDateFormat(String date) throws Exception{
+	public boolean checkDateFormat(String date) throws InvalidDateException{
 		if (date.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})"))
 		    return true;
 		else
@@ -48,7 +48,7 @@ public class Helpers
 	}
 	
 	//Takes String, checks for correct date format, returns relevant date object
-	public Date setDate(String date1) throws Exception{						
+	public Date setDate(String date1) throws InvalidDateException, ParseException{						
 		Date date = new Date();
 	    SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
 		if(checkDateFormat(date1)==true){
