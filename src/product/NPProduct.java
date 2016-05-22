@@ -61,7 +61,6 @@ public class NPProduct extends Product{
 	 */
 	public void sold(double qty){
 		stockLvl -= qty;
-		autoReorder();
 	}
 
 	public void replenish(double qty) {

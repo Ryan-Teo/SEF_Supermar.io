@@ -16,7 +16,6 @@ public class Order {
 		this.qtyOrdered=qtyOrdered;
 		this.date=date;
 		prod=fProd.getProduct(opID,ld.loadProducts());
-		prod.replenish(qtyOrdered);
 		
 	}
 	public String getOpID() {

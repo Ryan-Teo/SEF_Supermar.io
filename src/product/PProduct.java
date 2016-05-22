@@ -3,7 +3,7 @@ package product;
 public class PProduct extends Product{
 
 	private double stockLvl, replenishLvl, reorderQty, bulkQty, bulkDis;
-
+	
 	public PProduct (String pID, String pName, double unitPrice, String sID, String location,
 			double disPrice, double stockLvl, double replenishLvl, double reorderQty,
 			double bulkQty, double bulkDis)
@@ -49,7 +49,6 @@ public class PProduct extends Product{
 		if(stockLvl < replenishLvl)
 			replenish(reorderQty);
 	}
-	
 	/*
 	 * always successful
 	 * as customers have the items in their hands
@@ -58,7 +57,6 @@ public class PProduct extends Product{
 	 */
 	public void sold(double qty){
 		stockLvl -= qty;
-		autoReorder();
 	}
 
 	public void replenish(double qty) {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import order.Order;
 import customer.Customer;
 import customer.FuncCustomer;
 import data.AppendData;
@@ -23,6 +24,7 @@ public class Payment
 {
 	private Customer cus;
 	private double total;
+	
 	
 	public Payment(Customer cus, double total)
 	{
@@ -121,6 +123,8 @@ public class Payment
 		FuncProduct fProd = new FuncProduct();
 		FuncCustomer fCus = new FuncCustomer();
 		Customer customer = null;
+		Helpers helpers = new Helpers();
+		String date = helpers.obtCurrentDate();
 		
 		/*
 		 * create array lists
@@ -128,10 +132,13 @@ public class Payment
 		 */
 		ArrayList<Product> products = new ArrayList<Product>();	
 		ArrayList<Customer> customers = new ArrayList<Customer>();
+		ArrayList<Order> order = new ArrayList<Order>();
+		
 		try 
 		{
 			products = load.loadProducts();
 			customers = load.loadCustomers();
+			order = load.loadOrders();
 		}
 		catch (Exception e)	{}
 		
@@ -147,9 +154,31 @@ public class Payment
 				Product prod = fProd.getProduct(name, products);
 				
 				if(prod instanceof PProduct)
+				{
 					((PProduct) prod).sold(qty);
+					if(((PProduct)prod).getStockLvl() < ((PProduct)prod).getReplenishLvl())
+					{
+						((PProduct)prod).autoReorder();
+						try {
+							order.add(new Order(prod.getpID(), prod.getpName(), ((PProduct) prod).getReorderQty(), date));
+						} catch (Exception e) {
+							System.out.println("Unable to save to order file.");
+						}
+					}
+				}
 				else if(prod instanceof NPProduct)
+				{
 					((NPProduct) prod).sold(qty);
+					if(((NPProduct)prod).getStockLvl() < ((NPProduct)prod).getReplenishLvl())
+					{
+						((NPProduct)prod).autoReorder();
+						try {
+							order.add(new Order(prod.getpID(), prod.getpName(), ((NPProduct) prod).getReorderQty(), date));
+						} catch (Exception e) {
+							System.out.println("Unable to save to order file.");
+						}
+					}
+				}
 			}
 			catch (NotFoundException nfe) {} 			
 		}	
@@ -173,6 +202,7 @@ public class Payment
 			append.appendTransactions(trans);
 			save.saveProducts(products);
 			save.saveCustomers(customers);
+			save.saveOrders(order);
 		} catch (IOException e) {}
 	}
 }
