@@ -29,7 +29,7 @@ public class Employee {
 	
 	public void runEmpMenu(Scanner sc)
 	{			
-		System.out.printf("\nHello, %s \n", eName);
+		greet();
 		
 		char pos = eID.charAt(0);
 		
@@ -54,5 +54,10 @@ public class Employee {
 			ManagerMenu mMenu = new ManagerMenu();
 			mMenu.runManagerMenu(this, sc);
 		}			
+	}
+	
+	public void greet()
+	{
+		System.out.printf("\nHello, %s \n", eName);
 	}
 }

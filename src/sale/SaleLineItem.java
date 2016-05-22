@@ -36,4 +36,7 @@ public class SaleLineItem {
 		this.qty = quantity;
 		
 	}
+	public void setRevenue(Double value){
+		this.revenue = value;
+	}
 }

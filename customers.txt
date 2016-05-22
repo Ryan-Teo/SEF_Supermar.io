@@ -5,7 +5,7 @@ c004|Caitlyn Oswald|1000.00|100
 c005|Ulrica Rudolph|28.00|18
 c006|Grace Zheng|500.00|50
 c007|Julia Quach|500.00|50
-c008|Ryan Teo|499.00|30
+c008|Ryan Teo|500.00|50
 c009|Anthony Orn|500.00|50
 c010|Harry Utomo|500.00|50
 c011|Henley Chole|100.00|10

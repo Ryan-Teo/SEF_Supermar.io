@@ -6,6 +6,7 @@ import java.util.Scanner;
 import customer.Customer;
 import data.LoadData;
 import employee.Employee;
+import employee.SaleStaff;
 import exceptions.NotFoundException;
 import product.FuncProduct;
 import product.NPProduct;
@@ -17,6 +18,11 @@ import system.LogIn;
 public class Sale 
 {
 	private Customer cus;		
+	
+	public Sale(Customer cus)
+	{
+		this.cus = cus;
+	}
 		
 	/*
 	 * create an array list for sale line items
@@ -24,29 +30,21 @@ public class Sale
 	 */
 	private ArrayList<SaleLineItem> saleLine = new ArrayList<SaleLineItem>();		
 	private double total = 0;
-	LoadData ld = new LoadData();
 	
 	private FuncProduct fProd = new FuncProduct();	
-	private ArrayList<Product> products = new ArrayList<Product>();
-	private int exit = 0;	
-	
-	public Sale(Customer cus)
-	{
-		this.cus = cus;
-	}
+	private ArrayList<Product> products = null;
+	private Boolean exit = false;		
 		
-	public void startNewTransaction(Scanner sc) throws Exception
+	public void startNewTransaction(Scanner sc)
 	{				
 		/*
 		 * create an array list
 		 * and load products from file
 		 */
-		setProducts(new ArrayList<Product>());
-		LoadData load = new LoadData();
-		
+		LoadData load = new LoadData();		
 		try 
 		{
-			setProducts(load.loadProducts());
+			products = load.loadProducts();
 		}
 		catch (Exception e)	{}
 		
@@ -64,10 +62,10 @@ public class Sale
 				printSaleLineMenu();
 			String option = sc.nextLine();		
 			processInput(option, sc);	
-		} while (exit == 0);			
+		} while (!exit);			
 	}
 	
-	private void processInput(String option, Scanner sc) throws Exception
+	private void processInput(String option, Scanner sc)
 	{
 		
 		switch(option)
@@ -86,31 +84,37 @@ public class Sale
 		case "3":
 			Payment pay = new Payment(cus, total);
 			pay.printPayment(saleLine, sc);
-			exit = 1;
+			exit = true;
 			break;
 			
 		// ask for assistance
 		case "4":
 			LogIn login = new LogIn();
 			Employee emp = login.employeeLogin(sc);
-			emp.runEmpMenu(sc);
-			System.out.println("'o' to override transaction");
-			System.out.println("'c' to cancel transaction");
-			
-			String line  = sc.nextLine();
-			
-			if(line.equals("o")){
-				overrideTransaction(saleLine,sc);
+			emp.greet();
+			askForAssitanceMenu();
+			String line = sc.nextLine();
+			if(line.equals("1")){
+				((SaleStaff) emp).overrideMenu();
+				line = sc.nextLine();
+				if(line.equals("1")){
+					((SaleStaff) emp).overrideTransaction(saleLine,sc);
+				}
+				else if(line.equals("2")){
+					((SaleStaff) emp).cancelTransaction(saleLine,sc);
+				}
 			}
-			else if(line.equals("c")){
-				cancelTransaction(saleLine,sc);
+			else
+			{
+				emp.runEmpMenu(sc);
 			}
+			updateSubtotal();
 			break;
 						
 		// quit only when no item in sale line
 		case "Q":
 			if(saleLine.size() == 0)
-				exit = 1;
+				exit = true;
 			else
 				System.out.println("Invalid Choice, please re-enter:");
 			break;
@@ -162,7 +166,7 @@ public class Sale
 						+ "Please enter your choise: ");	
 	}
 	
-	private void addItem(Scanner sc) throws Exception
+	private void addItem(Scanner sc)
 	{		
 		/*
 		 * ask and search for product
@@ -170,14 +174,13 @@ public class Sale
 		String input;
 		double qty = 0;
 		Product prod = null;
-		boolean check = false;
-		LoadData productList = new LoadData();
+		boolean check = false;		
 		
 		do{
 			try {
 				System.out.print("Please enter product name/ID: ");
 				input = sc.nextLine();
-				prod = fProd.getProduct(input, productList.loadProducts());
+				prod = fProd.getProduct(input, products);
 				check = true;
 			} catch (NotFoundException e) {
 				e.printErrorMessage();
@@ -235,7 +238,7 @@ public class Sale
 	 * 2. if no bulk, but there is promotion
 	 * 3. no bulk, no promotion, just normal price
 	 */	
-	public double getSubtotal(Product prod, double qty)
+	private double getSubtotal(Product prod, double qty)
 	{
 		double subtotal = 0;
 		double bulkQty = 0;
@@ -270,7 +273,7 @@ public class Sale
 	/*
 	 * to obtain total
 	 */
-	public double getTotal()
+	private double getTotal()
 	{
 		double total = 0;
 		
@@ -279,73 +282,33 @@ public class Sale
 		
 		return total;			
 	}	
-	private void overrideTransaction(ArrayList<SaleLineItem> saleLine, Scanner sc)
-	{
-		
-		String input;
-		do{
-				
-				System.out.println("Specify order item name to be overriden : ");
-				String name = sc.nextLine();
-				System.out.println("Specify new amount of quantity : ");
-				Double quantity = Double.parseDouble(sc.nextLine());
-				
-				for(int i = 0; i<saleLine.size() ;i++)
-				{
-					if(name.equals(saleLine.get(i).getIpName()))
-					{
-						if(quantity > 0)
-						{
-							//Overriding quantityOrdered
-							((SaleLineItem) saleLine.get(i)).setQty(quantity);
-							System.out.println("Overriding transaction successful");
-							System.out.println("New Quantity : "+ ((SaleLineItem) saleLine.get(i)).getQty());
-							break;
-						}
-						else if (quantity == 0)
-						{
-							//Remove orderLine from the transaction
-							saleLine.remove(saleLine.get(i));
-							System.out.println("Order item is removed.");
-							break;
-						}
-					}
-					else
-					{
-						System.out.println("Order item not found.");
-						break;
-					}
-				}
-				System.out.println("Is there anything else to override? (yes/no) ");
-				input  = sc.nextLine();
-				
-			}while(!input.equals("no"));
-		}
 	
-	private void cancelTransaction(ArrayList<SaleLineItem> saleLine, Scanner sc)
-	{
-	
-		System.out.println("Cancel the whole transaction?(yes/no)");
-		String input = sc.nextLine();
+	private void askForAssitanceMenu(){
 		
-		if(input.equals("yes"))
-		{
-			for(int i = 0; i<saleLine.size() ;i++)
-			{
-				saleLine.remove(i);
+		System.out.println("---------------------");
+		System.out.println("1. Modify transaction");
+		System.out.println("2. Others");
+		System.out.println("Q. Quit");
+		System.out.println();
+		System.out.print("Please enter your choice: ");
+		
+	}
+	private void updateSubtotal(){
+		double subtotal = 0;
+		FuncProduct fProd = new FuncProduct();
+		Product prod;
+		
+		for (int i=0; i<saleLine.size(); i++){
+			try {
+				prod = fProd.getProduct(saleLine.get(i).getIpName(), products);
+				subtotal = getSubtotal(prod,saleLine.get(i).getQty());
+				saleLine.get(i).setRevenue(subtotal);
+			} catch (NotFoundException e) {
+				e.printStackTrace();
 			}
+			
 		}
-		else
-		{
-			System.out.println("Canceling transaction is aborted");
-		}
+			
 	}
-
-	public ArrayList<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(ArrayList<Product> products) {
-		this.products = products;
-	}
+	
 }

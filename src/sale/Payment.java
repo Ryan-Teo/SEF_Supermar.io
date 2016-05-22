@@ -9,8 +9,8 @@ import customer.FuncCustomer;
 import data.AppendData;
 import data.LoadData;
 import data.SaveData;
-import data.Transactions;
 import employee.Employee;
+import employee.SaleStaff;
 import exceptions.NotFoundException;
 import product.FuncProduct;
 import product.NPProduct;
@@ -23,8 +23,6 @@ public class Payment
 {
 	private Customer cus;
 	private double total;
-	private double amtPaid;
-	private int pt;
 	
 	public Payment(Customer cus, double total)
 	{
@@ -32,14 +30,17 @@ public class Payment
 		this.total = total;
 	}
 	
-	public void printPayment(ArrayList<SaleLineItem> trans, Scanner sc) throws Exception
+	private double amtPaid;
+	private int pt;
+	
+	public void printPayment(ArrayList<SaleLineItem> trans, Scanner sc)
 	{
 		double balance;
 		int dis, ptEarned;
 		Boolean paid;
 		Boolean exit = false;
 		
-		dis = loyaltyDis(cus, total);
+		dis = loyaltyDis();
 		amtPaid = total - dis;
 		ptEarned = loyaltyPt(amtPaid);
 		
@@ -51,6 +52,7 @@ public class Payment
 			{
 				balance = cus.getBalance();
 				pt = cus.getPoint() - dis/5*20 + ptEarned;
+				cus.setPoint(pt);
 				
 				System.out.printf("----------------------------------\n"
 								+ "        Payment Accepted\n"
@@ -83,12 +85,13 @@ public class Payment
 				System.out.println("No enough fund. Please top up!");
 				LogIn login = new LogIn();
 				Employee emp = login.employeeLogin(sc);
-				emp.runEmpMenu(sc);
+				emp.greet();				
+				((SaleStaff) emp).topUp(cus, sc);				
 			}		
 		} while(!exit);		
 	}
 	
-	public int loyaltyDis(Customer cus, double total)
+	private int loyaltyDis()
 	{
 		int point = cus.getPoint();
 		
@@ -112,7 +115,7 @@ public class Payment
 		return point;
 	}
 	
-	private void processData(ArrayList<SaleLineItem> trans) throws Exception
+	private void processData(ArrayList<SaleLineItem> trans)
 	{	
 		LoadData load = new LoadData();
 		FuncProduct fProd = new FuncProduct();
@@ -136,15 +139,12 @@ public class Payment
 		 * reduce the qty respectively
 		 */
 		for (int i=0; i<trans.size(); i++)
-		{	
-			// put all the items into register for record
-			Transactions.transactions.add(trans.get(i));
-			// reduce the qty				
+		{			
 			try
 			{
 				String name = trans.get(i).getIpName();
 				double qty = trans.get(i).getQty();
-				Product prod = fProd.getProduct(name,load.loadProducts());
+				Product prod = fProd.getProduct(name, products);
 				
 				if(prod instanceof PProduct)
 					((PProduct) prod).sold(qty);
@@ -155,7 +155,7 @@ public class Payment
 		}	
 		
 		/*
-		 * reduce credit for customer
+		 * reduce credit for customer from the file
 		 */
 		try {
 			customer = fCus.getCustomer(cus.getcID(), customers);
