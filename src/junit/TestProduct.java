@@ -2,10 +2,14 @@ package junit;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
+import product.FuncProduct;
 import product.NPProduct;
 import product.PProduct;
+import product.Product;
 
 public class TestProduct {
 
@@ -63,7 +67,7 @@ public class TestProduct {
 	
 	// Testing that non-perishable products are auto-reordered correctly
 	//Because stock is below auto-reorder qty, auto-reorder is called
-		@Test
+	@Test
 	public void npproductAutoReorderTest() {
 		NPProduct junit = new NPProduct("np103","chocolate",6.50,"s201","10.6",5.00,10,50,100,20,0.30);
 		
@@ -71,6 +75,4 @@ public class TestProduct {
 		int result = (int) junit.getStockLvl();
 		assertEquals(110, result,0);
 	}
-
-
 }
