@@ -208,6 +208,7 @@ public class SaleStaff extends Employee {
 			System.out.println("Cancelling transaction is aborted");
 		}
 	}
+	
 	public void overrideMenu()
 	{
 		
@@ -217,6 +218,4 @@ public class SaleStaff extends Employee {
 		System.out.println();
 		System.out.print("Please enter your choice: ");
 	}
-	
-	
 }
