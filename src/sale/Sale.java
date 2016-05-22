@@ -239,7 +239,7 @@ public class Sale
 	 * 2. if no bulk, but there is promotion
 	 * 3. no bulk, no promotion, just normal price
 	 */	
-	public double getSubtotal(Product prod, double qty)
+	private double getSubtotal(Product prod, double qty)
 	{
 		double subtotal = 0;
 		double bulkQty = 0;
@@ -274,7 +274,7 @@ public class Sale
 	/*
 	 * to obtain total
 	 */
-	public double getTotal()
+	private double getTotal()
 	{
 		double total = 0;
 		

@@ -14,8 +14,7 @@ import sale.SaleLineItem;
 
 public class TestPayment 
 {
-	ArrayList<SaleLineItem> trans = new ArrayList<SaleLineItem>();
-	Payment payment = new Payment();
+	Payment payment = null;
 	Customer cus;
 	Scanner sc = new Scanner(System.in);
 	
@@ -23,6 +22,7 @@ public class TestPayment
 	public void setUpCustomer()
 	{
 		cus = new Customer("c006", "Grace Zheng", 500, 50);
+		payment = new Payment(cus, 34);
 		
 		// when the transaction total is $34
 		payment.printPayment(cus, trans, 34, sc);

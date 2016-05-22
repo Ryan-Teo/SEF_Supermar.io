@@ -85,6 +85,9 @@ public class FuncProduct
 		 */
 		for (int i=1; i<=products.size(); i++)
 		{						
+			/*
+			 * get the information
+			 */
 			Product prod = products.get(i-1);
 			String pID = prod.getpID();
 			String pName = prod.getpName();
@@ -102,8 +105,21 @@ public class FuncProduct
 				
 			String location = prod.getLocation();
 						
-			System.out.printf("%-7d %-20s %-20s $%-19.2f %-20.2f %-20s\n", 
-					i, pID, pName, price, stock, location);
+			/*
+			 * print the information
+			 */
+			System.out.printf("%-7d %-20s %-20s $%-19.2f", i, pID, pName, price);
+			
+			if(prod instanceof PProduct)
+			{
+				System.out.printf(" %.2f%-14s", stock, "kg");
+			}
+			else if(prod instanceof NPProduct)
+			{
+				System.out.printf(" %-20d", (int)stock);
+			}
+			
+			System.out.printf(" %-20s\n", location);
 			
 			/*
 			 * pause after printing every 10 products
