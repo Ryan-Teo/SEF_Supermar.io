@@ -3,6 +3,7 @@ package junit;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -10,20 +11,19 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import data.*;
 import exceptions.*;
 import order.Order;
 import report.Report;
 import sale.*;
+import system.Helpers;
 
 public class TestReport {
 	ArrayList<SaleLineItem> trans = new ArrayList<SaleLineItem>();
 	ArrayList<Order> ord = new ArrayList<Order>();
 	Report rep = new Report();
+	Helpers help = new Helpers();
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		FuncData fd = new FuncData();
-		fd.load();		
 	}
 
 	@AfterClass
@@ -60,7 +60,7 @@ public class TestReport {
 	@Test
 	public void testAddToSalesRep() throws Exception {
 		System.out.println("testAddToSalesRep()");
-		String date1="01/01/2016",date2="03/01/2016";
+		Date date1=help.setDate("01/01/2016"),date2=help.setDate("03/01/2016");
 		rep.salesReport(trans, date1, date2);
 		assertEquals(rep.getSalesReport().size(),4,0);		
 	}
@@ -68,7 +68,7 @@ public class TestReport {
 	@Test
 	public void testAddToSalesRep1() throws Exception {
 		System.out.println("testAddToSalesRep1()");
-		String date1="01/01/2016",date2="05/01/2016";
+		Date date1=help.setDate("01/01/2016"),date2=help.setDate("05/01/2016");
 		rep.salesReport(trans, date1, date2);
 		assertEquals(rep.getSalesReport().size(),5,0);
 	}
@@ -76,7 +76,7 @@ public class TestReport {
 	@Test(expected=InvalidDateException.class)
 	public void testdate() throws Exception {
 		System.out.println("testdate()");
-		String date1="ww/01/2016",date2="05/01/2016";
+		Date date1=help.setDate("ww/01/2016"),date2=help.setDate("05/01/2016");
 		rep.salesReport(trans, date1, date2);	
 	}
 	
