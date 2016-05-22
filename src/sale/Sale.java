@@ -28,25 +28,23 @@ public class Sale
 	
 	private FuncProduct fProd = new FuncProduct();	
 	private ArrayList<Product> products = new ArrayList<Product>();
-	private int exit = 0;	
+	private Boolean exit = false;	
 	
 	public Sale(Customer cus)
 	{
 		this.cus = cus;
 	}
 		
-	public void startNewTransaction(Scanner sc) throws Exception
+	public void startNewTransaction(Scanner sc)
 	{				
 		/*
 		 * create an array list
 		 * and load products from file
 		 */
-		setProducts(new ArrayList<Product>());
-		LoadData load = new LoadData();
-		
+		LoadData load = new LoadData();		
 		try 
 		{
-			setProducts(load.loadProducts());
+			products = load.loadProducts();
 		}
 		catch (Exception e)	{}
 		
@@ -64,10 +62,10 @@ public class Sale
 				printSaleLineMenu();
 			String option = sc.nextLine();		
 			processInput(option, sc);	
-		} while (exit == 0);			
+		} while (!exit);			
 	}
 	
-	private void processInput(String option, Scanner sc) throws Exception
+	private void processInput(String option, Scanner sc)
 	{
 		
 		switch(option)
@@ -86,14 +84,14 @@ public class Sale
 		case "3":
 			Payment pay = new Payment(cus, total);
 			pay.printPayment(saleLine, sc);
-			exit = 1;
+			exit = true;
 			break;
 			
 		// ask for assistance
 		case "4":
 			LogIn login = new LogIn();
 			Employee emp = login.employeeLogin(sc);
-			emp.runEmpMenu(sc);
+			emp.greet();
 			System.out.println("'o' to override transaction");
 			System.out.println("'c' to cancel transaction");
 			
@@ -110,7 +108,7 @@ public class Sale
 		// quit only when no item in sale line
 		case "Q":
 			if(saleLine.size() == 0)
-				exit = 1;
+				exit = true;
 			else
 				System.out.println("Invalid Choice, please re-enter:");
 			break;
@@ -162,7 +160,7 @@ public class Sale
 						+ "Please enter your choise: ");	
 	}
 	
-	private void addItem(Scanner sc) throws Exception
+	private void addItem(Scanner sc)
 	{		
 		/*
 		 * ask and search for product
@@ -170,14 +168,13 @@ public class Sale
 		String input;
 		double qty = 0;
 		Product prod = null;
-		boolean check = false;
-		LoadData productList = new LoadData();
+		boolean check = false;		
 		
 		do{
 			try {
 				System.out.print("Please enter product name/ID: ");
 				input = sc.nextLine();
-				prod = fProd.getProduct(input, productList.loadProducts());
+				prod = fProd.getProduct(input, products);
 				check = true;
 			} catch (NotFoundException e) {
 				e.printErrorMessage();
@@ -279,6 +276,7 @@ public class Sale
 		
 		return total;			
 	}	
+	
 	private void overrideTransaction(ArrayList<SaleLineItem> saleLine, Scanner sc)
 	{
 		
@@ -334,18 +332,12 @@ public class Sale
 			{
 				saleLine.remove(i);
 			}
+			
+			exit = true;
 		}
 		else
 		{
 			System.out.println("Canceling transaction is aborted");
 		}
-	}
-
-	public ArrayList<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(ArrayList<Product> products) {
-		this.products = products;
 	}
 }

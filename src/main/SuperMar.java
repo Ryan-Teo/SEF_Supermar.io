@@ -5,7 +5,7 @@ import menu.MainMenu;
 public class SuperMar 
 {
 
-	public static void main(String[] args) throws Exception 
+	public static void main(String[] args)
 	{
 		// run menu
 		MainMenu main = new MainMenu();

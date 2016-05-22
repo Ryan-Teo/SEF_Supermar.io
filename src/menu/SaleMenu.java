@@ -23,7 +23,6 @@ public class SaleMenu {
 		System.out.println("--------Sale Menu--------");
 		System.out.println("1. Add New Customer");
 		System.out.println("2. Top Up");
-		System.out.println("3. Override Transaction");
 		System.out.println("Q. Quit");
 		System.out.println();
 		System.out.print("Please enter your choice: ");
@@ -43,11 +42,6 @@ public class SaleMenu {
 		// top up
 		case "2": 
 			sStaff.topUp(sc);
-			break;
-		 			
-		// override transaction
-		case "3":
-			//TODO
 			break;
 			
 		// quit

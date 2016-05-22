@@ -61,7 +61,7 @@ public class FuncProduct
 		}
 		else if (prod instanceof NPProduct)
 		{
-			((PProduct) prod).searchInfo();
+			((NPProduct) prod).searchInfo();
 		}		
 		
 		Helpers helpers = new Helpers();

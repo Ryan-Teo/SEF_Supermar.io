@@ -10,7 +10,7 @@ import system.LogIn;
 
 public class MainMenu 
 {	
-	public void welcomePage() throws Exception
+	public void welcomePage()
 	{
 		Scanner sc = new Scanner(System.in);
 		String input = null;

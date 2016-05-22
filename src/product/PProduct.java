@@ -95,7 +95,7 @@ public class PProduct extends Product{
 		System.out.println(" I.D.:               " + getpID()          );
 		System.out.println(" Name:               " + getpName()        );
 		System.out.printf(" Price:              $%.2f\n", getUnitPrice() );
-		System.out.printf(" Stock Level:        %.2fkg", stockLvl);
+		System.out.printf(" Stock Level:        %.2fkg\n", stockLvl);
 		System.out.println(" Location:           " + getLocation()     );
 		System.out.println("-------------------------------------");
 		System.out.println();
