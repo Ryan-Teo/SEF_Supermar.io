@@ -39,7 +39,7 @@ public class Payment
 		Boolean paid;
 		Boolean exit = false;
 		
-		dis = loyaltyDis(cus, total);
+		dis = loyaltyDis();
 		amtPaid = total - dis;
 		ptEarned = loyaltyPt(amtPaid);
 		
@@ -89,7 +89,7 @@ public class Payment
 		} while(!exit);		
 	}
 	
-	public int loyaltyDis(Customer cus, double total)
+	private int loyaltyDis()
 	{
 		int point = cus.getPoint();
 		
