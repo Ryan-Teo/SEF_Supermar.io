@@ -41,7 +41,7 @@ public class SaleMenu {
 			
 		// top up
 		case "2": 
-			sStaff.topUp(sc);
+			sStaff.topUp(null, sc);
 			break;
 			
 		// quit

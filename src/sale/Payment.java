@@ -23,14 +23,15 @@ public class Payment
 {
 	private Customer cus;
 	private double total;
-	private double amtPaid;
-	private int pt;
 	
 	public Payment(Customer cus, double total)
 	{
 		this.cus = cus;
 		this.total = total;
 	}
+	
+	private double amtPaid;
+	private int pt;
 	
 	public void printPayment(ArrayList<SaleLineItem> trans, Scanner sc)
 	{
@@ -51,6 +52,7 @@ public class Payment
 			{
 				balance = cus.getBalance();
 				pt = cus.getPoint() - dis/5*20 + ptEarned;
+				cus.setPoint(pt);
 				
 				System.out.printf("----------------------------------\n"
 								+ "        Payment Accepted\n"
@@ -84,7 +86,7 @@ public class Payment
 				LogIn login = new LogIn();
 				Employee emp = login.employeeLogin(sc);
 				emp.greet();				
-				((SaleStaff) emp).topUp(sc);				
+				((SaleStaff) emp).topUp(cus, sc);				
 			}		
 		} while(!exit);		
 	}
@@ -153,7 +155,7 @@ public class Payment
 		}	
 		
 		/*
-		 * reduce credit for customer
+		 * reduce credit for customer from the file
 		 */
 		try {
 			customer = fCus.getCustomer(cus.getcID(), customers);

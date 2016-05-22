@@ -17,6 +17,11 @@ import system.LogIn;
 public class Sale 
 {
 	private Customer cus;		
+	
+	public Sale(Customer cus)
+	{
+		this.cus = cus;
+	}
 		
 	/*
 	 * create an array list for sale line items
@@ -24,16 +29,10 @@ public class Sale
 	 */
 	private ArrayList<SaleLineItem> saleLine = new ArrayList<SaleLineItem>();		
 	private double total = 0;
-	LoadData ld = new LoadData();
 	
 	private FuncProduct fProd = new FuncProduct();	
-	private ArrayList<Product> products = new ArrayList<Product>();
-	private Boolean exit = false;	
-	
-	public Sale(Customer cus)
-	{
-		this.cus = cus;
-	}
+	private ArrayList<Product> products = null;
+	private Boolean exit = false;		
 		
 	public void startNewTransaction(Scanner sc)
 	{				
