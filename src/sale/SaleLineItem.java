@@ -2,9 +2,9 @@ package sale;
 
 public class SaleLineItem {
 	private String ipName, date, icID;
-	private Double qty,revenue;
+	private double qty,revenue;
 	
-	public SaleLineItem(String ipName, Double qty, Double revenue, String date, String icID){
+	public SaleLineItem(String ipName, double qty, double revenue, String date, String icID){
 		this.ipName=ipName;
 		this.qty=qty;
 		this.revenue=revenue;
@@ -20,11 +20,11 @@ public class SaleLineItem {
 		return icID;
 	}
 
-	public Double getQty() {
+	public double getQty() {
 		return qty;
 	}
 
-	public Double getRevenue() {
+	public double getRevenue() {
 		return revenue;
 	}
 
@@ -32,11 +32,11 @@ public class SaleLineItem {
 		return date;
 	}
 
-	public void setQty(Double quantity) {
+	public void setQty(double quantity) {
 		this.qty = quantity;
 		
 	}
-	public void setRevenue(Double value){
+	public void setRevenue(double value){
 		this.revenue = value;
 	}
 }
