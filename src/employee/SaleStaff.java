@@ -25,7 +25,7 @@ public class SaleStaff extends Employee {
 		 * initial loyalty point is 0
 		 */
 		String cID, cName;
-		Double credit = 0.0;
+		double credit = 0.0;
 		int point = 0;
 		
 		/*
@@ -152,7 +152,7 @@ public class SaleStaff extends Employee {
 				System.out.println("Specify order item name to be overriden : ");
 				String name = sc.nextLine();
 				System.out.println("Specify new amount of quantity : ");
-				Double quantity = Double.parseDouble(sc.nextLine());
+				double quantity = Double.parseDouble(sc.nextLine());
 				
 				
 				for(int i = 0; i<saleLine.size() ;i++)
