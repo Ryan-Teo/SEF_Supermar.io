@@ -10,9 +10,9 @@ import sale.*;
 import system.Helpers;
 
 public class Report {
-	Helpers help = new Helpers();
-	LoadData ld = new LoadData();
-	FuncProduct fProd=new FuncProduct();
+	private Helpers help = new Helpers();
+	private LoadData ld = new LoadData();
+	private FuncProduct fProd=new FuncProduct();
 	private ArrayList<ReportItem> SalesReport = new ArrayList<ReportItem>();//MOVE TO RESPECTIVE METHODS WHEN DONE TESTING
 	private ArrayList<ReportItem> TopSalesReport = new ArrayList<ReportItem>();//MOVE TO RESPECTIVE METHODS WHEN DONE TESTING
 		
