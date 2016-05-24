@@ -15,6 +15,9 @@ public abstract class Product {
 		this.location = location;
 		this.disPrice = disPrice;
 	}
+	
+	//abstract class for product, just getters and setters
+	
 	public String getpID() {
 		return pID;
 	}

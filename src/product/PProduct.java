@@ -65,6 +65,8 @@ public class PProduct extends Product{
 		System.out.printf("New stock level of %s is %.2f\n\n", getpName(), stockLvl);			
 	}
 
+	//when customer selects item, item information will appear
+	
 	public void addItemInfo(){
 		System.out.println();
 		System.out.println("-------------------------------------");
@@ -83,6 +85,9 @@ public class PProduct extends Product{
 		System.out.println("-------------------------------------");
 		System.out.println();
 	}
+	
+	//called when user searches product without logging in
+	//called when warehouse staff searches for product
 
 	public void searchInfo(){
 		System.out.println();

@@ -48,8 +48,10 @@ public class Payment
 		
 		do
 		{
+			// check if payment succeeds
 			paid = cus.paid(amtPaid);
 			
+			// when payment goes through
 			if (paid)
 			{
 				balance = cus.getBalance();
@@ -82,6 +84,11 @@ public class Payment
 				exit = true;
 			}
 			
+			/*
+			 * when there is no enough fund
+			 * require employee login
+			 * a sale staff does top up for the customer
+			 */
 			else
 			{
 				System.out.println("No enough fund. Please top up!");
@@ -184,7 +191,7 @@ public class Payment
 		}	
 		
 		/*
-		 * reduce credit for customer from the file
+		 * reduce credit and set point for customer from the file
 		 */
 		try {
 			customer = fCus.getCustomer(cus.getcID(), customers);
