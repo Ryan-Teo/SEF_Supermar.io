@@ -144,6 +144,7 @@ public class SaleStaff extends Employee {
 		
 		String input;
 		do{
+				//Specifying SaleLineItem to be modified
 				System.out.println("Specify order item name to be overriden : ");
 				String name = sc.nextLine();
 				System.out.println("Specify new amount of quantity : ");
@@ -156,7 +157,7 @@ public class SaleStaff extends Employee {
 					{
 						if(quantity > 0)
 						{
-							//Overriding quantityOrdered
+							//Overriding quantityOrdered of specified SaleLineItem
 							((SaleLineItem) saleLine.get(i)).setQty(quantity);
 							System.out.println("Overriding transaction successful");
 							System.out.println("New Quantity : "+ ((SaleLineItem) saleLine.get(i)).getQty());
@@ -164,7 +165,7 @@ public class SaleStaff extends Employee {
 						}
 						else if (quantity == 0)
 						{
-							//Remove orderLine from the transaction
+							//Remove saleLineItem from the SaleLine 
 							saleLine.remove(saleLine.get(i));
 							System.out.println("Order item is removed.");
 							break;
@@ -188,6 +189,7 @@ public class SaleStaff extends Employee {
 		System.out.println("Cancel the whole transaction?(yes/no)");
 		String input = sc.nextLine();
 		
+		//Removing every saleLineItem in the arrayList SaleLine 
 		if(input.equals("yes"))
 		{
 			for(int i = 0; i<saleLine.size() ;i++)

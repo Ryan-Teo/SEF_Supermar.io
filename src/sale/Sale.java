@@ -89,21 +89,30 @@ public class Sale
 			
 		// ask for assistance
 		case "4":
+			//Authentication of SaleStaffs
 			LogIn login = new LogIn();
 			Employee emp = login.employeeLogin(sc);
 			emp.greet();
+			
+			//Printing Options
 			askForAssitanceMenu();
 			String line = sc.nextLine();
+			
 			if(line.equals("1")){
 				((SaleStaff) emp).overrideMenu();
 				line = sc.nextLine();
+				
+				//Modifying quantity of saleLineItems
 				if(line.equals("1")){
 					((SaleStaff) emp).overrideTransaction(saleLine,sc);
 				}
+				//Cancelling the whole transaction
 				else if(line.equals("2")){
 					((SaleStaff) emp).cancelTransaction(saleLine,sc);
 				}
 			}
+			
+			//Goes to SaleMenu
 			else
 			{
 				emp.runEmpMenu(sc);
