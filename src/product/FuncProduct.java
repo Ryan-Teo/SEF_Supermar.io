@@ -16,20 +16,22 @@ public class FuncProduct
 		 * if specified product found, return customer
 		 * otherwise, throw exception and return null
 		 */	
-		Product prod = null;
-		for (int a = 0; a < products.size(); a++)	
-			if (products.get(a).getpID().compareTo(pID) == 0 
-				|| products.get(a).getpName().compareTo(pID) == 0)
+		Product prod = null, tempProd=null;
+		for (int a = 0; a < products.size(); a++){
+			tempProd=products.get(a);
+			if (tempProd.getpID().compareTo(pID) == 0 
+				|| tempProd.getpName().compareTo(pID) == 0)
 			{
-				if (products.get(a)instanceof PProduct)
+				if (tempProd instanceof PProduct)
 				{
-					prod = (PProduct) products.get(a);
+					prod = (PProduct) tempProd;
 				}
-				else if (products.get(a)instanceof NPProduct)
+				else if (tempProd instanceof NPProduct)
 				{
-					prod = (NPProduct) products.get(a);
+					prod = (NPProduct) tempProd;
 				}
 			}
+		}
 		
 		if (prod == null)
 		{
