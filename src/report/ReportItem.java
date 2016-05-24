@@ -3,6 +3,7 @@ package report;
 import product.Product;
 
 public class ReportItem {
+	//Single report item, used in Report class
 	private Product prod;
 	private double qty, revenue;
 	protected ReportItem(Product prod, double qty, double revenue){

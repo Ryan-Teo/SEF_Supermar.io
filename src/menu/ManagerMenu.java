@@ -136,10 +136,12 @@ public class ManagerMenu {
 	private void salesRepInput(Scanner sc, Report rep){
 		Date date1, date2;
 		System.out.println();
+		//infinite loop, will break when correct date format is entered
 		do{
 			try{
 				System.out.printf("Please enter the first date (e.g.DD/MM/YYYY):");
 				date1=help.setDate(sc.nextLine());
+				//if no exception thrown, break out of loop
 				break;
 			}catch(InvalidDateException e){
 				e.printErrorMessage();
@@ -147,10 +149,12 @@ public class ManagerMenu {
 				System.out.println(e.getMessage());
 			}
 		}while(1>0);
+		//infinite loop, will break when correct date format is entered
 		do{
 			try{
 				System.out.printf("Please enter the second date (e.g.DD/MM/YYYY):");
 				date2=help.setDate(sc.nextLine());
+				//if no exception thrown, break out of loop
 				break;
 			}catch(InvalidDateException e){
 				e.printErrorMessage();
@@ -159,6 +163,7 @@ public class ManagerMenu {
 			}
 		}while(1>0);
 		try {
+			//Generate report if date input is in correct format
 			rep.salesReport(ld.loadTransactions(),date1,date2);
 		} catch (Exception e) {
 			System.out.println("Error in: Sales Report");

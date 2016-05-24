@@ -32,6 +32,7 @@ public class TestReport {
 
 	@Before
 	public void setUp() throws Exception {
+		//add 9 transaction items
 		trans.add(new SaleLineItem("banana", 20.0, 40.0, "01/01/2016", "t001"));
 		trans.add(new SaleLineItem("sugar", 15.0, 45.0, "01/01/2016", "t002"));
 		trans.add(new SaleLineItem("banana", 3.0, 6.0, "02/01/2016", "t003"));
@@ -50,6 +51,7 @@ public class TestReport {
 
 	@Test
 	public void testAddToTrans() {
+		//add 3 more transaction items
 		System.out.println("testAddToTrans()");
 		trans.add(new SaleLineItem("chocolate", 10.0, 65.0, "07/01/2016", "t010"));
 		trans.add(new SaleLineItem("grapes", 3.0, 13.5, "08/01/2016", "t011"));
@@ -59,6 +61,7 @@ public class TestReport {
 	
 	@Test
 	public void testAddToSalesRep() throws Exception {
+		//testing transactions made between 01/01/2016 and 03/01/2016
 		System.out.println("testAddToSalesRep()");
 		Date date1=help.setDate("01/01/2016"),date2=help.setDate("03/01/2016");
 		rep.salesReport(trans, date1, date2);
@@ -67,6 +70,7 @@ public class TestReport {
 	
 	@Test
 	public void testAddToSalesRep1() throws Exception {
+		//testing transactions made between 01/01/2016 and 05/01/2016
 		System.out.println("testAddToSalesRep1()");
 		Date date1=help.setDate("01/01/2016"),date2=help.setDate("05/01/2016");
 		rep.salesReport(trans, date1, date2);
@@ -75,6 +79,7 @@ public class TestReport {
 	
 	@Test(expected=InvalidDateException.class)
 	public void testdate() throws Exception {
+		//Tests that InvalidDateException is thrown when date input is incorrect
 		System.out.println("testdate()");
 		Date date1=help.setDate("ww/01/2016"),date2=help.setDate("05/01/2016");
 		rep.salesReport(trans, date1, date2);	
@@ -82,6 +87,7 @@ public class TestReport {
 	
 	@Test
 	public void testSuppRep() throws Exception {
+		//Tests supplyReport prints out correctly
 		System.out.println("testSuppRep()");
 		ord.add(new Order("pp101", "banana", 100.5, "02/05/2016"));
 		ord.add(new Order("np103", "chocolate", 75.0, "05/05/2016"));
@@ -92,6 +98,7 @@ public class TestReport {
 	
 	@Test
 	public void testTopRep() throws Exception {
+		//Tests topSellingReport prints out correctly
 		System.out.println("testAddToTrans()");
 		trans.add(new SaleLineItem("banana", 8.0, 16.0, "08/01/2016", "t010"));
 		trans.add(new SaleLineItem("grapes", 9.0, 40.5, "09/01/2016", "t011"));
