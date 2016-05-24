@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import customer.Customer;
 import customer.FuncCustomer;
+import data.AppendData;
 import data.LoadData;
 import data.SaveData;
 import exceptions.NotFoundException;
@@ -25,19 +26,13 @@ public class SaleStaff extends Employee {
 		 * initial loyalty point is 0
 		 */
 		String cID, cName;
-		double credit = 0.0;
+		Double credit = 0.0;
 		int point = 0;
 		
 		/*
 		 * create an array list
-		 * and load it from file
 		 */
 		ArrayList<Customer> customers = new ArrayList<Customer>();		
-		LoadData load = new LoadData();
-		
-		try {
-			customers = load.loadCustomers();
-		} catch (Exception e) {}
 		
 		// customer ID
 		System.out.printf("\nPlease enter new Customer I.D: ");
@@ -50,11 +45,11 @@ public class SaleStaff extends Employee {
 		customers.add(new Customer(cID, cName, credit, point));
 		
 		/*
-		 * save to file
+		 * append to file
 		 */
-		SaveData save = new SaveData();
+		AppendData append = new AppendData();
 		try {
-			save.saveCustomers(customers);
+			append.appendCustomers(customers);
 		} catch (IOException e) {}
 		
 		System.out.printf("\nCustomer added successfully.\n\n");

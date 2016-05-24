@@ -1,9 +1,11 @@
 package employee;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import data.LoadData;
+import data.SaveData;
 import exceptions.NotFoundException;
 import product.FuncProduct;
 import product.Product;
@@ -74,6 +76,11 @@ public class WarehouseStaff extends Employee
 			} while(!check);		
 			
 			prod.replenish(qty);
+			
+			SaveData save = new SaveData();
+			try {
+				save.saveProducts(products);
+			} catch (IOException e) {}
 			
 			System.out.print("Press enter to continue/ Enter Q to quit...");
 			input = sc.nextLine();
