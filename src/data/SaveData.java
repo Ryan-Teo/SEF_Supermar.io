@@ -126,15 +126,15 @@ public class SaveData
 			String sID = product.getsID(); 
 			String location = product.getLocation();
 			double disPrice = product.getDisPrice();
+			double bulkDis = product.getBulkDis(); 
 			double stockLvl = product.getStockLvl();
 			double replenishLvl = product.getReplenishLvl();
 			double reorderQty = product.getReorderQty();
 			double bulkQty = product.getBulkQty();
-			double bulkDis = product.getBulkDis(); 
 		
 			
 			pw.printf("%s|%s|%.2f|%s|%s|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f\n", 
-					pID, pName, unitPrice, sID, location, disPrice, stockLvl, replenishLvl, reorderQty, bulkQty, bulkDis);
+					pID, pName, unitPrice, sID, location, disPrice, bulkDis, stockLvl, replenishLvl, reorderQty, bulkQty);
 			}
 			else if(products.get(i)instanceof NPProduct)
 			{
@@ -146,14 +146,14 @@ public class SaveData
 			String sID = product.getsID(); 
 			String location = product.getLocation();
 			double disPrice = product.getDisPrice();
+			double bulkDis = product.getBulkDis(); 	
 			int stockLvl = (int) product.getStockLvl();
 			int replenishLvl = (int) product.getReplenishLvl();
 			int reorderQty = (int) product.getReorderQty();
-			int bulkQty = (int) product.getBulkQty();
-			double bulkDis = product.getBulkDis(); 			
+			int bulkQty = (int) product.getBulkQty();		
 			
-			pw.printf("%s|%s|%.2f|%s|%s|%.2f|%d|%d|%d|%d|%.2f\n", 
-					pID, pName, unitPrice, sID, location, disPrice, stockLvl, replenishLvl, reorderQty, bulkQty, bulkDis);
+			pw.printf("%s|%s|%.2f|%s|%s|%.2f|%.2f|%d|%d|%d|%d\n", 
+					pID, pName, unitPrice, sID, location, disPrice, bulkDis, stockLvl, replenishLvl, reorderQty, bulkQty);
 			}
 		}
 		pw.close();
