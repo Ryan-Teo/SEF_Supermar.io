@@ -180,25 +180,24 @@ public class LoadData
 			String sID = st.nextToken();
 			String location = st.nextToken();
 			double disPrice = Double.parseDouble(st.nextToken());
+			double bulkDis = Double.parseDouble(st.nextToken());
 			
 			if(pID.charAt(0) == 'p')
 			{
 			double stockLvl = Double.parseDouble(st.nextToken());
 			double replenishLvl = Double.parseDouble(st.nextToken());
 			double reorderQty = Double.parseDouble(st.nextToken());
-			double bulkQty = Double.parseDouble(st.nextToken());
-			double bulkDis = Double.parseDouble(st.nextToken());
+			double bulkQty = Double.parseDouble(st.nextToken());		
 			
-			
-			products.add(new PProduct(pID, pName, unitPrice, sID, location, disPrice, stockLvl, replenishLvl, reorderQty, bulkQty, bulkDis));
+			products.add(new PProduct(pID, pName, unitPrice, sID, location, disPrice, bulkDis, stockLvl, replenishLvl, reorderQty, bulkQty));
 			}
+			
 			else if(pID.charAt(0) == 'n')
 			{
 			int stockLvl = Integer.parseInt(st.nextToken());
 			int replenishLvl = Integer.parseInt(st.nextToken());
 			int reorderQty = Integer.parseInt(st.nextToken());
 			int bulkQty = Integer.parseInt(st.nextToken());
-			double bulkDis = Double.parseDouble(st.nextToken());
 			
 			
 			products.add(new NPProduct(pID, pName, unitPrice, sID, location, disPrice, bulkDis, stockLvl, replenishLvl, reorderQty, bulkQty));
