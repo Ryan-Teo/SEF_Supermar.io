@@ -33,15 +33,15 @@ public class TestReport {
 	@Before
 	public void setUp() throws Exception {
 		//add 9 transaction items
-		trans.add(new SaleLineItem("banana", 20.0, 40.0, "01/01/2016", "t001"));
-		trans.add(new SaleLineItem("sugar", 15.0, 45.0, "01/01/2016", "t002"));
-		trans.add(new SaleLineItem("banana", 3.0, 6.0, "02/01/2016", "t003"));
-		trans.add(new SaleLineItem("flour", 2.0, 5.0, "02/01/2016", "t004"));
-		trans.add(new SaleLineItem("chocolate", 10.0, 65.0, "03/01/2016", "t005"));
-		trans.add(new SaleLineItem("grapes", 3.0, 13.5, "04/01/2016", "t006"));
-		trans.add(new SaleLineItem("banana", 16.0, 32.0, "04/01/2016", "t007"));
-		trans.add(new SaleLineItem("grapes", 6.0, 27.0, "04/01/2016", "t008"));
-		trans.add(new SaleLineItem("banana", 8.0, 16.0, "05/01/2016", "t009"));
+		trans.add(new SaleLineItem("pp101", "banana", 20.0, 40.0, "01/01/2016"));
+		trans.add(new SaleLineItem("np104", "sugar", 15.0, 45.0, "01/01/2016"));
+		trans.add(new SaleLineItem("pp101", "banana", 3.0, 6.0, "02/01/2016"));
+		trans.add(new SaleLineItem("np105", "flour", 2.0, 5.0, "02/01/2016"));
+		trans.add(new SaleLineItem("np103", "chocolate", 10.0, 65.0, "03/01/2016"));
+		trans.add(new SaleLineItem("pp102", "grapes", 3.0, 13.5, "04/01/2016"));
+		trans.add(new SaleLineItem("pp101", "banana", 16.0, 32.0, "04/01/2016"));
+		trans.add(new SaleLineItem("pp102", "grapes", 6.0, 27.0, "04/01/2016"));
+		trans.add(new SaleLineItem("pp101", "banana", 8.0, 16.0, "05/01/2016"));
 	}
 
 	@After
@@ -53,9 +53,9 @@ public class TestReport {
 	public void testAddToTrans() {
 		//add 3 more transaction items
 		System.out.println("testAddToTrans()");
-		trans.add(new SaleLineItem("chocolate", 10.0, 65.0, "07/01/2016", "t010"));
-		trans.add(new SaleLineItem("grapes", 3.0, 13.5, "08/01/2016", "t011"));
-		trans.add(new SaleLineItem("banana", 4.0, 18.0, "09/01/2016", "t012"));
+		trans.add(new SaleLineItem("np103", "chocolate", 10.0, 65.0, "07/01/2016"));
+		trans.add(new SaleLineItem("pp102", "grapes", 3.0, 13.5, "08/01/2016"));
+		trans.add(new SaleLineItem("pp101", "banana", 4.0, 18.0, "09/01/2016"));
 		assertEquals(trans.size(),12,0);
 	}
 	
@@ -100,9 +100,9 @@ public class TestReport {
 	public void testTopRep() throws Exception {
 		//Tests topSellingReport prints out correctly
 		System.out.println("testAddToTrans()");
-		trans.add(new SaleLineItem("banana", 8.0, 16.0, "08/01/2016", "t010"));
-		trans.add(new SaleLineItem("grapes", 9.0, 40.5, "09/01/2016", "t011"));
-		trans.add(new SaleLineItem("banana", 10.0, 20.0, "10/01/2016", "t012"));
+		trans.add(new SaleLineItem("pp101", "banana", 8.0, 16.0, "08/01/2016"));
+		trans.add(new SaleLineItem("pp102", "grapes", 9.0, 40.5, "09/01/2016"));
+		trans.add(new SaleLineItem("pp101", "banana", 10.0, 20.0, "10/01/2016"));
 		rep.topSellingReport(trans);
 	}
 	
