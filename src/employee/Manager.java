@@ -126,8 +126,8 @@ public class Manager extends Employee {
 			disPrice = Double.parseDouble(sc.nextLine());
 			
 			// add product to the array list
-			products.add(new NPProduct(pID, pName, unitPrice, sID, location, disPrice,
-									stockLvl, replenishLvl, reorderQty, bulkQty, bulkDis));
+			products.add(new NPProduct(pID, pName, unitPrice, sID, location, disPrice, bulkDis,
+									stockLvl, replenishLvl, reorderQty, bulkQty));
 			System.out.println("Product added successfully!");
 		}		
 		

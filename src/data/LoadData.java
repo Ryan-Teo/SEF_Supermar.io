@@ -201,7 +201,7 @@ public class LoadData
 			double bulkDis = Double.parseDouble(st.nextToken());
 			
 			
-			products.add(new NPProduct(pID, pName, unitPrice, sID, location, disPrice, stockLvl, replenishLvl, reorderQty, bulkQty, bulkDis));
+			products.add(new NPProduct(pID, pName, unitPrice, sID, location, disPrice, bulkDis, stockLvl, replenishLvl, reorderQty, bulkQty));
 			}
 			
 		}

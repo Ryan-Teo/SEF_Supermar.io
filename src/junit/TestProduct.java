@@ -22,7 +22,7 @@ public class TestProduct {
 	// Testing that non-perishable products are sold correctly
 	@Test
 	public void npproductSoldTest() {
-		NPProduct junit = new NPProduct("np103","chocolate",6.50,"s201","10.6",5.00,150,50,100,20,0.30);
+		NPProduct junit = new NPProduct("np103","chocolate",6.50,"s201","10.6",5.00,0.30,150,50,100,20);
 		
 		junit.sold(20);
 		double result = junit.getStockLvl();
@@ -42,7 +42,7 @@ public class TestProduct {
 	// Testing that non-perishable products are replenished correctly
 	@Test
 	public void npproductReplenishTest() {
-		NPProduct junit = new NPProduct("np103","chocolate",6.50,"s201","10.6",5.00,150,50,100,20,0.30);
+		NPProduct junit = new NPProduct("np103","chocolate",6.50,"s201","10.6",5.00,0.30,150,50,100,20);
 		
 		junit.replenish(20);
 		int result = (int) junit.getStockLvl();
@@ -65,7 +65,7 @@ public class TestProduct {
 	//Because stock is below auto-reorder qty, auto-reorder is called
 	@Test
 	public void npproductAutoReorderTest() {
-		NPProduct junit = new NPProduct("np103","chocolate",6.50,"s201","10.6",5.00,10,50,100,20,0.30);
+		NPProduct junit = new NPProduct("np103","chocolate",6.50,"s201","10.6",5.00,0.30,10,50,100,20);
 		
 		junit.autoReorder();
 		int result = (int) junit.getStockLvl();

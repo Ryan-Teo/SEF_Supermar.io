@@ -3,10 +3,10 @@ package product;
 public abstract class Product {
 
 	private String pID, pName, sID, location;
-	private double unitPrice, disPrice;
+	private double unitPrice, disPrice, bulkDis;
 
 	public Product (String pID, String pName, double unitPrice, String sID, String location,
-			double disPrice)
+			double disPrice, double bulkDis)
 	{
 		this.pID = pID;
 		this.pName = pName;
@@ -14,6 +14,7 @@ public abstract class Product {
 		this.sID = sID;
 		this.location = location;
 		this.disPrice = disPrice;
+		this.bulkDis = bulkDis;
 	}
 	
 	//abstract class for product, just getters and setters
@@ -39,7 +40,12 @@ public abstract class Product {
 	public void setDisPrice(double disPrice) {
 		this.disPrice = disPrice;
 	}
-	
+	public double getBulkDis() {
+		return bulkDis;
+	}
+	public void setBulkDis(double bulkDis) {
+		this.bulkDis = bulkDis;
+	}
 	public abstract void autoReorder();
 	public abstract void sold(double qty);
 	public abstract void replenish(double qty);

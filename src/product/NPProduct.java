@@ -3,20 +3,18 @@ package product;
 public class NPProduct extends Product{
 
 	private int stockLvl, replenishLvl, reorderQty, bulkQty; 
-	private double bulkDis;
 
 	public NPProduct (String pID, String pName, 
 			double unitPrice, String sID, String location,
-			double disPrice, int stockLvl, int replenishLvl, 
+			double disPrice, double bulkDis, int stockLvl, int replenishLvl, 
 			int reorderQty,
-			int bulkQty, double bulkDis)
+			int bulkQty)
 	{
-		super(pID, pName, unitPrice, sID, location, disPrice);
+		super(pID, pName, unitPrice, sID, location, disPrice, bulkDis);
 		this.stockLvl = stockLvl;
 		this.replenishLvl = replenishLvl;
 		this.reorderQty = reorderQty;	
 		this.bulkQty = bulkQty;
-		this.bulkDis = bulkDis;
 	}
 
 	public int getStockLvl() {
@@ -37,14 +35,6 @@ public class NPProduct extends Product{
 
 	public void setBulkQty(int bulkQty) {
 		this.bulkQty = bulkQty;
-	}
-
-	public double getBulkDis() {
-		return bulkDis;
-	}
-
-	public void setBulkDis(double bulkDis) {
-		this.bulkDis = bulkDis;
 	}
 
 	public void autoReorder()
@@ -81,7 +71,7 @@ public class NPProduct extends Product{
 		System.out.printf(" Price:              $%.2f/item\n", getUnitPrice());
 		System.out.println(" Stock Level:        " + stockLvl     );
 		System.out.println(" Bulk min amount:    " + bulkQty      );
-		System.out.printf(" Bulk discount:      %.0f", bulkDis*100);
+		System.out.printf(" Bulk discount:      %.0f", super.getBulkDis()*100);
 		System.out.println("% off");
 
 		if(getUnitPrice() > getDisPrice())	
