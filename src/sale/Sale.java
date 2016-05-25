@@ -264,9 +264,18 @@ public class Sale
 			bulkDis = ((NPProduct) prod).getBulkDis();
 		}
 		
-		// for bulk discount
+		/*
+		 *  for bulk discount
+		 *  compare with promoted discount if there is
+		 *  assign to the lower one
+		 */
 		if(qty >= bulkQty)
+		{
 			subtotal = qty * prod.getUnitPrice() * (1-bulkDis);
+			
+			if (prod.getDisPrice() != prod.getUnitPrice())
+				subtotal = Math.min(subtotal, qty * prod.getDisPrice());
+		}			
 		
 		// not enough for bulk, for promoted discount
 		else if (prod.getDisPrice() != prod.getUnitPrice())

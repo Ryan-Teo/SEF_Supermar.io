@@ -6,7 +6,7 @@ import menu.ManagerMenu;
 import menu.SaleMenu;
 import menu.WarehouseMenu;
 
-public class Employee {
+public abstract class Employee {
 	private String eID,eName,password;
 	
 	public Employee(String eID,String eName,String password){
