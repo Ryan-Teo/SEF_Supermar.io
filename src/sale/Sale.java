@@ -149,16 +149,26 @@ public class Sale
 		System.out.printf("-----------------------New Transaction-----------------------\n"
 						+ "%-7s %-20s %-20s %-20s\n", "No.", "Product Name", "Quantity", "Subtotal");
 				
-		String name;
+		String id, name;
 		double qty, subtotal;
 	
 		for(int i=0; i<saleLine.size(); i++)
 		{
+			id = saleLine.get(i).getIpID();
 			name = saleLine.get(i).getIpName();
 			qty = saleLine.get(i).getQty();
 			subtotal = saleLine.get(i).getRevenue();
 			
-			System.out.printf("%-7d %-20s %-20.2f $%-19.2f\n", i+1, name, qty, subtotal);
+			// printing pproduct in kg
+			if(id.charAt(0) == 'p')
+			{
+				String amt = String.format("%.2f%s", qty, "kg");
+				System.out.printf("%-7d %-20s %-20s $%-19.2f\n", i+1, name, amt, subtotal);
+			}
+				
+			// printing npproduct in whole number
+			else if(id.charAt(0) == 'n')
+				System.out.printf("%-7d %-20s %-20.0f $%-19.2f\n", i+1, name, qty, subtotal);
 		}
 		
 		total = getTotal();
@@ -172,7 +182,7 @@ public class Sale
 						+ "3. Pay\n"
 						+ "4. Ask For Assistance\n"
 						+ "\n"
-						+ "Please enter your choise: ");	
+						+ "Please enter your choice: ");	
 	}
 	
 	private void addItem(Scanner sc)
@@ -197,6 +207,7 @@ public class Sale
 		}while(!check);
 
 		prod.addItemInfo();
+		String id = prod.getpID();
 		String name = prod.getpName();
 		
 		/*
@@ -219,7 +230,7 @@ public class Sale
 		 * return successful message
 		 */
 		if(qty != 0)
-		{
+		{			
 			// calculate the subtotal
 			double subtotal = getSubtotal(prod, qty);
 			
@@ -227,11 +238,8 @@ public class Sale
 			Helpers helpers = new Helpers();
 			String date = helpers.obtCurrentDate();
 			
-			// get customer id
-			String cID = cus.getcID();
-			
 			// add to arraylist
-			saleLine.add(new SaleLineItem(name, qty, subtotal, date, cID));
+			saleLine.add(new SaleLineItem(id, name, qty, subtotal, date));
 			
 			// print result
 			if(prod instanceof PProduct)

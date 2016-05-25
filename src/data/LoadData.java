@@ -275,13 +275,14 @@ public class LoadData
 			
 			StringTokenizer st = new StringTokenizer(line, "|");
 			
+
+			String ipID = st.nextToken();
 			String ipName = st.nextToken();
 			Double qty = Double.parseDouble(st.nextToken());
 			Double revenue = Double.parseDouble(st.nextToken());
 			String date = st.nextToken();
-			String icID = st.nextToken();
 							
-			transactions.add(new SaleLineItem(ipName, qty, revenue, date, icID));
+			transactions.add(new SaleLineItem(ipID, ipName, qty, revenue, date));
 		}	
 		
 		sc.close();

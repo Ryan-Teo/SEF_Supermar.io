@@ -120,13 +120,13 @@ public class AppendData
 		{
 			SaleLineItem transaction = transactions.get(i);
 			
+			String ipID = transaction.getIpID();
 			String ipName = transaction.getIpName();
 			Double qty = transaction.getQty();
 			Double revenue = transaction.getRevenue();
 			String date = transaction.getDate(); 
-			String icID = transaction.getIcID();
 			
-			pw.printf("%s|%.2f|%.2f|%s|%s \n", ipName, qty, revenue, date, icID);			
+			pw.printf("%s|%s|%.2f|%.2f|%s \n", ipID, ipName, qty, revenue, date);			
 		}
 		pw.close();
 	}
