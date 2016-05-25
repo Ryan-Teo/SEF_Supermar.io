@@ -126,7 +126,7 @@ public class AppendData
 			Double revenue = transaction.getRevenue();
 			String date = transaction.getDate(); 
 			
-			pw.printf("%s|%s|%.2f|%.2f|%s \n", ipID, ipName, qty, revenue, date);			
+			pw.printf("%s|%s|%.2f|%.2f|%s\n", ipID, ipName, qty, revenue, date);			
 		}
 		pw.close();
 	}

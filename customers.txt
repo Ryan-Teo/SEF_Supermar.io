@@ -3,7 +3,7 @@ c002|Clarence Maisy|500.00|0
 c003|Dominic Bret|375.30|9
 c004|Caitlyn Oswald|1000.00|100
 c005|Ulrica Rudolph|28.00|18
-c006|Grace Zheng|984.00|561
+c006|Grace Zheng|982.50|21
 c007|Julia Quach|500.00|50
 c008|Ryan Teo|500.00|50
 c009|Anthony Orn|500.00|50

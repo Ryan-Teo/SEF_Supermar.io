@@ -119,7 +119,7 @@ public class Report {
 			double revenue=SalesReport.get(i).getRevenue();
 			System.out.printf("| %"+idLen+"s | %"+nameLen+"s | %"+uPriceLen+".2f | %"+qtyLen+".2f | %"+revLen+".2f |\n", pID, pName, price,qtySold,revenue);
 		}
-		int totalLine=line-9-String.valueOf(totalPrice).length();
+		int totalLine=line-20-String.valueOf(totalPrice).length();
 		System.out.printf("| Total Revenue: %"+totalLine+"s%.2f |\n","$",totalPrice);
 		help.printDash(line);
 		System.out.println();
