@@ -117,10 +117,10 @@ public class Report {
 			double price=prod.getUnitPrice();
 			double qtySold=SalesReport.get(i).getQty();
 			double revenue=SalesReport.get(i).getRevenue();
-			System.out.printf("| %"+idLen+"s | %"+nameLen+"s | %"+uPriceLen+"s | %"+qtyLen+"s | %"+revLen+"s |\n", pID, pName, price,qtySold,revenue);
+			System.out.printf("| %"+idLen+"s | %"+nameLen+"s | %"+uPriceLen+".2f | %"+qtyLen+".2f | %"+revLen+".2f |\n", pID, pName, price,qtySold,revenue);
 		}
-		int totalLine=line-12-String.valueOf(totalPrice).length();
-		System.out.printf("| Total Price: %"+totalLine+"s |\n","$"+totalPrice);
+		int totalLine=line-7-String.valueOf(totalPrice).length();
+		System.out.printf("| Total Price: %"+totalLine+"s%.2f |\n","$",totalPrice);
 		help.printDash(line);
 		System.out.println();
 	}
@@ -160,7 +160,7 @@ public class Report {
 		//Printing the SupplyReport dynamically
 		for(int i=0;i<orders.size();i++){
 			order=orders.get(i);
-			System.out.printf("| %"+idLen+"s | %"+nameLen+"s | %"+qtyLen+"s | %"+dateLen+"s |\n", order.getOpID(),order.getOpName(),order.getQtyOrdered(),order.getDate());
+			System.out.printf("| %"+idLen+"s | %"+nameLen+"s | %"+qtyLen+".2f | %"+dateLen+"s |\n", order.getOpID(),order.getOpName(),order.getQtyOrdered(),order.getDate());
 		}
 		help.printDash(line);
 		System.out.println();
@@ -245,7 +245,7 @@ public class Report {
 			double price=prod.getUnitPrice();
 			double qtySold=TopSalesReport.get(i).getQty();
 			double revenue=TopSalesReport.get(i).getRevenue();
-			System.out.printf("|%d %"+idLen+"s | %"+nameLen+"s | %"+uPriceLen+"s | %"+qtyLen+"s | %"+revLen+"s |\n", i+1 ,pID, pName, price,qtySold,revenue);
+			System.out.printf("|%d %"+idLen+"s | %"+nameLen+"s | %"+uPriceLen+".2f | %"+qtyLen+".2f | %"+revLen+".2f |\n", i+1 ,pID, pName, price,qtySold,revenue);
 		}
 		help.printDash(line);
 		System.out.println();
