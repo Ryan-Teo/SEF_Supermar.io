@@ -81,8 +81,8 @@ public class Manager extends Employee {
 			disPrice = Double.parseDouble(sc.nextLine());
 			
 			// add product to the array list
-			products.add(new PProduct(pID, pName, unitPrice, sID, location, disPrice,
-								pStockLvl, pReplenishLvl, pReorderQty, pBulkQty, bulkDis));
+			products.add(new PProduct(pID, pName, unitPrice, sID, location, disPrice, bulkDis,
+								pStockLvl, pReplenishLvl, pReorderQty, pBulkQty));
 			System.out.println("Product added successfully!");
 		}
 				
@@ -175,38 +175,85 @@ public class Manager extends Employee {
 			}
 		}while(check == 0);
 		
-		prod.addItemInfo();
-		
-		System.out.println("1. to edit bulk info");
-		System.out.println("2. to edit promotional sale price");
-		System.out.print("Please enter your choice: ");
-		choice = sc.nextLine();
-		
-		if(choice.equals("1"))
+		/*
+		 * loop to edit different parameters of the product
+		 */
+		do
 		{
-			System.out.print("Enter the new minimum bulk quantity for discount: ");
-			if(prod instanceof PProduct)
-				((PProduct) prod).setBulkQty(Double.parseDouble(sc.nextLine()));
-			else if(prod instanceof NPProduct)
-				((NPProduct) prod).setBulkQty(Integer.parseInt(sc.nextLine()));
+			prod.addItemInfo();
 			
-			System.out.print("Enter the new bulk quantity discount (eg. 0.2 for 20%): ");
-			if(prod instanceof PProduct)
-				((PProduct) prod).setBulkDis(Double.parseDouble(sc.nextLine()));
-			else if(prod instanceof NPProduct)
-				((NPProduct) prod).setBulkDis(Double.parseDouble(sc.nextLine()));			
+			System.out.println("1. edit supplier");
+			System.out.println("2. edit bulk info");
+			System.out.println("3. edit promotional sale price");
+			System.out.println("4. edit other details" );
+			System.out.println("Q. Quit" );
+			System.out.print("Please enter your choice: ");
+			choice = sc.nextLine();
 			
-			System.out.println("Bulk info editted successfully!");
-		}
-		
-		else if(choice.equals("2"))
-		{
-			System.out.print("Enter the new promotional sale price: ");
-			prod.setDisPrice(Double.parseDouble(sc.nextLine()));
+			// edit supplier
+			if(choice.equals("1"))
+			{
+				System.out.print("Enter the ID of the new supplier: ");
+				prod.setsID(sc.nextLine());
+				
+				System.out.println("Supplier ID editted successfully!");
+			}
 			
-			System.out.println("Promotional sale price editted successfully!");
-		}
-		
+			// edit bulk info
+			else if(choice.equals("2"))
+			{
+				System.out.print("Enter the new minimum bulk quantity for discount: ");
+				if(prod instanceof PProduct)
+					((PProduct) prod).setBulkQty(Double.parseDouble(sc.nextLine()));
+				else if(prod instanceof NPProduct)
+					((NPProduct) prod).setBulkQty(Integer.parseInt(sc.nextLine()));
+				
+				System.out.print("Enter the new bulk quantity discount (eg. 0.2 for 20%): ");
+				prod.setBulkDis(Double.parseDouble(sc.nextLine()));	
+				
+				System.out.println("Bulk info editted successfully!");
+			}
+			
+			// edit promotional sale price
+			else if(choice.equals("3"))
+			{
+				System.out.print("Enter the new promotional sale price: ");
+				prod.setDisPrice(Double.parseDouble(sc.nextLine()));
+				
+				System.out.println("Promotional sale price editted successfully!");
+			}
+			
+			// edit other details
+			else if(choice.equals("4"))
+			{
+				System.out.print("Enter the new unit price: ");
+				if(prod instanceof PProduct)
+					((PProduct) prod).setUnitPrice(Double.parseDouble(sc.nextLine()));
+				else if(prod instanceof NPProduct)
+					((NPProduct) prod).setUnitPrice(Integer.parseInt(sc.nextLine()));
+				
+				System.out.print("Enter the new stock level: ");
+				if(prod instanceof PProduct)
+					((PProduct) prod).setStockLvl(Double.parseDouble(sc.nextLine()));
+				else if(prod instanceof NPProduct)
+					((NPProduct) prod).setStockLvl(Integer.parseInt(sc.nextLine()));	
+				
+				System.out.print("Enter the new replenish level: ");
+				if(prod instanceof PProduct)
+					((PProduct) prod).setReplenishLvl(Double.parseDouble(sc.nextLine()));
+				else if(prod instanceof NPProduct)
+					((NPProduct) prod).setReplenishLvl(Integer.parseInt(sc.nextLine()));	
+				
+				System.out.print("Enter the new reorder quantity: ");
+				if(prod instanceof PProduct)
+					((PProduct) prod).setReorderQty(Double.parseDouble(sc.nextLine()));
+				else if(prod instanceof NPProduct)
+					((NPProduct) prod).setReorderQty(Integer.parseInt(sc.nextLine()));	
+				
+				System.out.println("Details editted successfully!");
+			}
+		}while(!choice.equals("Q"));
+				
 		/*
 		 * save the array list to file
 		 */

@@ -46,6 +46,13 @@ public abstract class Product {
 	public void setBulkDis(double bulkDis) {
 		this.bulkDis = bulkDis;
 	}
+	public void setsID(String sID) {
+		this.sID = sID;
+	}
+	public void setUnitPrice(double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
 	public abstract void autoReorder();
 	public abstract void sold(double qty);
 	public abstract void replenish(double qty);

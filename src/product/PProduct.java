@@ -34,6 +34,18 @@ public class PProduct extends Product{
 	public void setBulkQty(double bulkQty) {
 		this.bulkQty = bulkQty;
 	}
+	public void setStockLvl(double stockLvl) {
+		this.stockLvl = stockLvl;
+	}
+
+	public void setReplenishLvl(double replenishLvl) {
+		this.replenishLvl = replenishLvl;
+	}
+
+	public void setReorderQty(double reorderQty) {
+		this.reorderQty = reorderQty;
+	}
+
 	public void autoReorder()
 	{
 		if(stockLvl < replenishLvl)

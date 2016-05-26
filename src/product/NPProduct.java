@@ -37,6 +37,18 @@ public class NPProduct extends Product{
 		this.bulkQty = bulkQty;
 	}
 
+	public void setStockLvl(int stockLvl) {
+		this.stockLvl = stockLvl;
+	}
+
+	public void setReplenishLvl(int replenishLvl) {
+		this.replenishLvl = replenishLvl;
+	}
+
+	public void setReorderQty(int reorderQty) {
+		this.reorderQty = reorderQty;
+	}
+
 	public void autoReorder()
 	{
 		if(stockLvl < replenishLvl)
